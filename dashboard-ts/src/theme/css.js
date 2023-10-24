@@ -1,8 +1,5 @@
-import { alpha } from '@mui/material/styles';
-import { dividerClasses } from '@mui/material/Divider';
-import { checkboxClasses } from '@mui/material/Checkbox';
-import { menuItemClasses } from '@mui/material/MenuItem';
-import { autocompleteClasses } from '@mui/material/Autocomplete';
+import { alpha, dividerClasses, checkboxClasses, menuItemClasses, autocompleteClasses } from '@mui/material';
+
 
 // ----------------------------------------------------------------------
 
@@ -106,9 +103,8 @@ export function bgGradient(props) {
 
   if (imgUrl) {
     return {
-      background: `linear-gradient(${direction}, ${startColor || color}, ${
-        endColor || color
-      }), url(${imgUrl})`,
+      background: `linear-gradient(${direction}, ${startColor || color}, ${endColor || color
+        }), url(${imgUrl})`,
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center center',

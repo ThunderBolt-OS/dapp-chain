@@ -1,10 +1,5 @@
 import PropTypes from 'prop-types';
-
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-
+import { Box, Card, Stack, Typography } from '@mui/material';
 import { fShortenNumber } from 'src/utils/format-number';
 
 // ----------------------------------------------------------------------

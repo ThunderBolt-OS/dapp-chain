@@ -3,6 +3,8 @@ import React from 'react';
 import { Box, Container, Stack, Typography, Button } from '@mui/material';
 import Iconify from 'src/components/iconify';
 
+import MintNFTForm from '../create-nft-form';
+
 const MintNFTView = () => {
   return (
     <Container>
@@ -14,7 +16,7 @@ const MintNFTView = () => {
           New User
         </Button> */}
 
-     
+        <MintNFTForm />
     </Container>
   );
 };

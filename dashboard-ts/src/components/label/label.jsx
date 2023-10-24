@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
-
-import Box from '@mui/material/Box';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Box } from '@mui/material';
 
 import { StyledLabel } from './styles';
 

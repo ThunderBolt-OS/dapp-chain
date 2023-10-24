@@ -1,11 +1,7 @@
-import PropTypes from 'prop-types';
-
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
 import { styled, useTheme } from '@mui/material/styles';
-
+import PropTypes from 'prop-types';
+import { Card, CardHeader } from '@mui/material';
 import { fNumber } from 'src/utils/format-number';
-
 import Chart, { useChart } from 'src/components/chart';
 
 // ----------------------------------------------------------------------

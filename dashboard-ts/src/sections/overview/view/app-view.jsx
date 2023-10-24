@@ -1,8 +1,6 @@
 import { faker } from '@faker-js/faker';
+import { Container, Unstable_Grid2 as Grid, Typography } from '@mui/material';
 
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
 
 import Iconify from 'src/components/iconify';
 

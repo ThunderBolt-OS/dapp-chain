@@ -1,10 +1,6 @@
 import { useState } from 'react';
 
-import Menu from '@mui/material/Menu';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import { listClasses } from '@mui/material/List';
-import Typography from '@mui/material/Typography';
+import { Menu, Button, MenuItem, listClasses, Typography } from '@mui/material';
 
 import Iconify from 'src/components/iconify';
 

@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
+import { Box, Card, CardHeader } from '@mui/material';
 
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
 
 import { fNumber } from 'src/utils/format-number';
 

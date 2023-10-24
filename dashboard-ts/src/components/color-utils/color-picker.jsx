@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types';
 import { forwardRef, useCallback } from 'react';
-
-import Stack from '@mui/material/Stack';
-import { alpha } from '@mui/material/styles';
-import ButtonBase from '@mui/material/ButtonBase';
-
+import { Stack, alpha, ButtonBase } from '@mui/material';
 import Iconify from '../iconify';
 
 // ----------------------------------------------------------------------

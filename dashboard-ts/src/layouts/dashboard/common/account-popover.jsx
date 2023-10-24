@@ -1,18 +1,18 @@
 import { useState } from 'react';
-
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import Popover from '@mui/material/Popover';
-import { alpha } from '@mui/material/styles';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-
+import {
+  Box,
+  Avatar,
+  Divider,
+  Popover,
+  alpha,
+  MenuItem,
+  Typography,
+  IconButton,
+} from '@mui/material';
 import { account } from 'src/_mock/account';
-
 import { useWallet } from 'src/contexts/WalletContext';
 import { generateAvatarURL } from '@cfx-kit/wallet-avatar';
+
 
 // ----------------------------------------------------------------------
 

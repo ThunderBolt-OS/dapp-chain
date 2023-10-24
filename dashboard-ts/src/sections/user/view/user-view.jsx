@@ -1,14 +1,16 @@
 import { useState } from 'react';
+import {
+  Card,
+  Stack,
+  Table,
+  Button,
+  Container,
+  TableBody,
+  Typography,
+  TableContainer,
+  TablePagination,
+} from '@mui/material';
 
-import Card from '@mui/material/Card';
-import Stack from '@mui/material/Stack';
-import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import TableBody from '@mui/material/TableBody';
-import Typography from '@mui/material/Typography';
-import TableContainer from '@mui/material/TableContainer';
-import TablePagination from '@mui/material/TablePagination';
 
 import { users } from 'src/_mock/user';
 

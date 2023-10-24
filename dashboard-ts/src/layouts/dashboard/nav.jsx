@@ -1,28 +1,23 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
-import { alpha } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import ListItemButton from '@mui/material/ListItemButton';
-
+import {
+  Box,
+  Stack,
+  Drawer,
+  Button,
+  Avatar,
+  alpha,
+  Typography,
+  ListItemButton,
+} from '@mui/material';
 import { usePathname } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
-
 import { useResponsive } from 'src/hooks/use-responsive';
-
 import { account } from 'src/_mock/account';
-
 import Logo from 'src/components/logo';
 import Scrollbar from 'src/components/scrollbar';
-
 import { NAV } from './config-layout';
 import navConfig from './config-navigation';
-
 import { useWallet } from 'src/contexts/WalletContext';
 import { generateAvatarURL } from '@cfx-kit/wallet-avatar';
 import { useRouter } from 'src/routes/hooks';

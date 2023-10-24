@@ -1,12 +1,11 @@
 import React from 'react';
 import { useRouter } from 'src/routes/hooks';
 
-// mui imports
 import { Box, Button, IconButton } from '@mui/material';
-import {Close as CloseIcon} from '@mui/icons-material';
+import { Close as CloseIcon } from '@mui/icons-material';
 import { useWallet } from 'src/contexts/WalletContext';
+import {  useSnackbar } from 'notistack';
 
-import { closeSnackbar, useSnackbar } from 'notistack';
 
 function ConnectButton() {
   const { enqueueSnackbar } = useSnackbar();
@@ -20,11 +19,11 @@ function ConnectButton() {
     enqueueSnackbar('Wallet Connected Successfully', {
       variant: 'success',
       autoHideDuration: 2000,
-      action: (key) => (
-        <IconButton onClick={() => closeSnackbar(key)} size="small" color="inherit">
-          <CloseIcon />
-        </IconButton>
-      ),
+      // action: (key) => (
+      //   <IconButton onClick={() => closeSnackbar(key)} size="small" color="inherit">
+      //     <CloseIcon />
+      //   </IconButton>
+      // ),
       anchorOrigin: {
         vertical: 'bottom',
         horizontal: 'right',

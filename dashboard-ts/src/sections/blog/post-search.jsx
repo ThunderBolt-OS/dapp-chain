@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types';
-
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
-
+import { TextField, InputAdornment, Autocomplete, autocompleteClasses } from '@mui/material';
 import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
