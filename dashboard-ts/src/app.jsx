@@ -10,18 +10,22 @@ import { WalletProvider } from './contexts/WalletContext';
 
 import { SnackbarProvider } from 'notistack';
 
+import { CreateNFTDataContextProvider } from 'src/contexts/CreateNFTDataContext';
+
 // ----------------------------------------------------------------------
 
 export default function App() {
-  useScrollToTop();
+	useScrollToTop();
 
-  return (
-    <ThemeProvider>
-      <SnackbarProvider>
-        <WalletProvider>
-          <Router />
-        </WalletProvider>
-      </SnackbarProvider>
-    </ThemeProvider>
-  );
+	return (
+		<ThemeProvider>
+			<SnackbarProvider>
+				<WalletProvider>
+					<CreateNFTDataContextProvider>
+						<Router />
+					</CreateNFTDataContextProvider>
+				</WalletProvider>
+			</SnackbarProvider>
+		</ThemeProvider>
+	);
 }

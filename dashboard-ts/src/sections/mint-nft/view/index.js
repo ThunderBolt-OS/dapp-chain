@@ -1,1 +1,1 @@
-export {default as MintNFTView} from './mint-nft-view';
+export { default as MintNFTView } from './mint-nft-view';

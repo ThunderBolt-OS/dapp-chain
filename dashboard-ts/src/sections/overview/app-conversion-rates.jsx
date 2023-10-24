@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { Box, Card, CardHeader } from '@mui/material';
 
-
 import { fNumber } from 'src/utils/format-number';
 
 import Chart, { useChart } from 'src/components/chart';
@@ -9,54 +8,57 @@ import Chart, { useChart } from 'src/components/chart';
 // ----------------------------------------------------------------------
 
 export default function AppConversionRates({ title, subheader, chart, ...other }) {
-  const { colors, series, options } = chart;
+	const { colors, series, options } = chart;
 
-  const chartSeries = series.map((i) => i.value);
+	const chartSeries = series.map(i => i.value);
 
-  const chartOptions = useChart({
-    colors,
-    tooltip: {
-      marker: { show: false },
-      y: {
-        formatter: (value) => fNumber(value),
-        title: {
-          formatter: () => '',
-        },
-      },
-    },
-    plotOptions: {
-      bar: {
-        horizontal: true,
-        barHeight: '28%',
-        borderRadius: 2,
-      },
-    },
-    xaxis: {
-      categories: series.map((i) => i.label),
-    },
-    ...options,
-  });
+	const chartOptions = useChart({
+		colors,
+		tooltip: {
+			marker: { show: false },
+			y: {
+				formatter: value => fNumber(value),
+				title: {
+					formatter: () => ''
+				}
+			}
+		},
+		plotOptions: {
+			bar: {
+				horizontal: true,
+				barHeight: '28%',
+				borderRadius: 2
+			}
+		},
+		xaxis: {
+			categories: series.map(i => i.label)
+		},
+		...options
+	});
 
-  return (
-    <Card {...other}>
-      <CardHeader title={title} subheader={subheader} />
+	return (
+		<Card {...other}>
+			<CardHeader
+				title={title}
+				subheader={subheader}
+			/>
 
-      <Box sx={{ mx: 3 }}>
-        <Chart
-          dir="ltr"
-          type="bar"
-          series={[{ data: chartSeries }]}
-          options={chartOptions}
-          width="100%"
-          height={364}
-        />
-      </Box>
-    </Card>
-  );
+			<Box sx={{ mx: 3 }}>
+				<Chart
+					dir='ltr'
+					type='bar'
+					series={[{ data: chartSeries }]}
+					options={chartOptions}
+					width='100%'
+					height={364}
+				/>
+			</Box>
+		</Card>
+	);
 }
 
 AppConversionRates.propTypes = {
-  chart: PropTypes.object,
-  subheader: PropTypes.string,
-  title: PropTypes.string,
+	chart: PropTypes.object,
+	subheader: PropTypes.string,
+	title: PropTypes.string
 };

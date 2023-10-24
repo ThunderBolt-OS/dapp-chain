@@ -16,44 +16,49 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 // ----------------------------------------------------------------------
 
 export default function Router() {
-  const routes = useRoutes([
-    {
-      path: '/connect',
-      element: <ConnectPage />,
-    },
-    {
-      element: (
-        <DashboardLayout>
-          <Suspense>
-            <Outlet />
-          </Suspense>
-        </DashboardLayout>
-      ),
-      children: [
-        { element: <PrivateRoute element={<IndexPage />} />, index: true },
-        { path: 'user', element: <PrivateRoute element={<UserPage />} /> },
-        { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
-        {
-          path: 'create-nft',
-          element: <MintNFT />,
-        },
-      ],
-    },
+	const routes = useRoutes([
+		{
+			path: '/connect',
+			element: <ConnectPage />
+		},
+		{
+			element: (
+				<DashboardLayout>
+					<Suspense>
+						<Outlet />
+					</Suspense>
+				</DashboardLayout>
+			),
+			children: [
+				{ element: <PrivateRoute element={<IndexPage />} />, index: true },
+				{ path: 'user', element: <PrivateRoute element={<UserPage />} /> },
+				{ path: 'products', element: <ProductsPage /> },
+				{ path: 'blog', element: <BlogPage /> },
+				{
+					path: 'create-nft',
+					element: <MintNFT />
+				}
+			]
+		},
 
-    {
-      path: 'login',
-      element: <LoginPage />,
-    },
-    {
-      path: '404',
-      element: <Page404 />,
-    },
-    {
-      path: '*',
-      element: <Navigate to="/404" replace />,
-    },
-  ]);
+		{
+			path: 'login',
+			element: <LoginPage />
+		},
+		{
+			path: '404',
+			element: <Page404 />
+		},
+		{
+			path: '*',
+			element: (
+				<Navigate
+					to='/404'
+					replace
+				/>
+			)
+		}
+	]);
 
-  return routes;
+	return routes;
 }

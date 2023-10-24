@@ -5,13 +5,13 @@ import { ConnectWalletView } from 'src/sections/connect-wallet/view';
 // ----------------------------------------------------------------------
 
 export default function ConnetWallet() {
-  return (
-    <>
-      <Helmet>
-        <title> Connect Wallet | Minimal UI </title>
-      </Helmet>
+	return (
+		<>
+			<Helmet>
+				<title> Connect Wallet | Minimal UI </title>
+			</Helmet>
 
-      <ConnectWalletView />
-    </>
-  );
+			<ConnectWalletView />
+		</>
+	);
 }
