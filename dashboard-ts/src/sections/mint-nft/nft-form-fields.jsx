@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, Grid, Stack, TextField, InputAdornment, Typography, Chip, Avatar, useTheme } from '@mui/material';
 import { useCreateNFT } from 'src/contexts/CreateNFTDataContext';
+// import 
 
 const NFTFormFields = () => {
 	const theme = useTheme();
@@ -42,6 +43,8 @@ const NFTFormFields = () => {
 		// Handle form submission logic here
 		console.log('Form submitted:', title, description, price);
 		console.log('Form present in context:', nftFormData);
+		// calling the generate ipfs url function
+
 	};
 
 	return (
