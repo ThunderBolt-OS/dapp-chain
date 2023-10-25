@@ -71,7 +71,7 @@ export default function Nav({ openNav, onCloseNav }) {
 					variant='body2'
 					sx={{ color: 'text.secondary' }}
 				>
-					{/* {Web3.util.toWei(balanceOfEactAccount[0], 'eth')} ETH */}
+					{0.324} ETH
 				</Typography>
 			</Box>
 		</Box>

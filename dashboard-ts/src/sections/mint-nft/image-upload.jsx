@@ -64,7 +64,7 @@ const ImageUpload = () => {
 	};
 
 	const validateImage = file => {
-		const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
+		const allowedExtensions = /(\.png|\.jpg|\.jpeg|\.avif)$/i;
 		return allowedExtensions.test(file.name);
 	};
 

@@ -3,6 +3,7 @@ import { Box, Button, Grid, Stack, TextField, InputAdornment, Typography, Chip, 
 import { useCreateNFT } from 'src/contexts/CreateNFTDataContext';
 import { storeAsset } from 'src/utils/generateIPFSUrl';
 import { set } from 'lodash';
+import { NFTKoMintMaar } from 'src/utils/mintNFTFromIPFS';
 
 const NFTFormFields = ({ loading, setLoading }) => {
 	const theme = useTheme();
@@ -53,6 +54,7 @@ const NFTFormFields = ({ loading, setLoading }) => {
 			nftFormData.imageFile,
 			'testImage'
 		);
+		await NFTKoMintMaar(ifpsUrl);
 		console.log('ipfs url', ifpsUrl);
 		setLoading(false);
 	};
