@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState } from 'react';
 export const CreateNFTDataContext = createContext({
 	nftFormData: {
 		base64Image: '',
+		binaryImage: '',
 		title: '',
 		description: '',
 		price: ''
@@ -13,6 +14,7 @@ export const CreateNFTDataContext = createContext({
 export function CreateNFTDataContextProvider ({children}) {
 	const [nftFormData, setNftFormData] = useState({
 		base64Image: '',
+		binaryImage: '',
 		title: '',
 		description: '',
 		price: ''

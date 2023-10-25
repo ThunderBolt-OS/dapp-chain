@@ -10,7 +10,7 @@ module.exports = {
     hardhat: {
     },
     PolygonSomaiya : {
-      url: "http://localhost:8123",
+      url: "http://10.0.20.8:20002",
       accounts: [PRIVATE_KEY]
     }
   },

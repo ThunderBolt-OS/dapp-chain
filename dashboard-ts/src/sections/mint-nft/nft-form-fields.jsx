@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Box, Button, Grid, Stack, TextField, InputAdornment, Typography, Chip, Avatar, useTheme } from '@mui/material';
 import { useCreateNFT } from 'src/contexts/CreateNFTDataContext';
-// import 
+import { storeAsset } from 'src/utils/generateIPFSUrl';
+import { set } from 'lodash';
 
-const NFTFormFields = () => {
+const NFTFormFields = ({loading, setLoading}) => {
 	const theme = useTheme();
 	const { nftFormData, updateNftFormData } = useCreateNFT();
 	const [title, setTitle] = useState('');
@@ -32,6 +33,7 @@ const NFTFormFields = () => {
 		setDescription('');
 		setPrice('');
 		updateNftFormData({
+			...nftFormData,
 			base64Image: '',
 			title: '',
 			description: '',
@@ -39,12 +41,14 @@ const NFTFormFields = () => {
 		});
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		// Handle form submission logic here
 		console.log('Form submitted:', title, description, price);
 		console.log('Form present in context:', nftFormData);
 		// calling the generate ipfs url function
-
+		setLoading(true)
+		const ifpsUrl = await storeAsset(nftFormData.title, nftFormData.description, nftFormData.base64Image, 'randomName')
+		setLoading(false)	
 	};
 
 	return (

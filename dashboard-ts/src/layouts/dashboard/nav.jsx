@@ -112,7 +112,7 @@ export default function Nav({ openNav, onCloseNav }) {
 						variant='body2'
 						sx={{ color: 'text.secondary', mt: 1 }}
 					>
-						From only $69
+						Tackle Counterfieting now
 					</Typography>
 				</Box>
 
