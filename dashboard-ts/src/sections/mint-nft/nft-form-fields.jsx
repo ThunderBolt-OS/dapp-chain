@@ -4,7 +4,7 @@ import { useCreateNFT } from 'src/contexts/CreateNFTDataContext';
 import { storeAsset } from 'src/utils/generateIPFSUrl';
 import { set } from 'lodash';
 
-const NFTFormFields = ({loading, setLoading}) => {
+const NFTFormFields = ({ loading, setLoading }) => {
 	const theme = useTheme();
 	const { nftFormData, updateNftFormData } = useCreateNFT();
 	const [title, setTitle] = useState('');
@@ -46,9 +46,15 @@ const NFTFormFields = ({loading, setLoading}) => {
 		console.log('Form submitted:', title, description, price);
 		console.log('Form present in context:', nftFormData);
 		// calling the generate ipfs url function
-		setLoading(true)
-		const ifpsUrl = await storeAsset(nftFormData.title, nftFormData.description, nftFormData.base64Image, 'randomName')
-		setLoading(false)	
+		setLoading(true);
+		const ifpsUrl = await storeAsset(
+			nftFormData.title,
+			nftFormData.description,
+			nftFormData.imageFile,
+			'testImage'
+		);
+		console.log('ipfs url', ifpsUrl);
+		setLoading(false);
 	};
 
 	return (

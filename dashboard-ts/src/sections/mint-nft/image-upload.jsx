@@ -6,8 +6,8 @@ import { useSnackbar } from 'notistack';
 import { useCreateNFT } from 'src/contexts/CreateNFTDataContext';
 
 const ImageUpload = () => {
-  const theme = useTheme();
-  const { nftFormData, updateNftFormData } = useCreateNFT();
+	const theme = useTheme();
+	const { nftFormData, updateNftFormData } = useCreateNFT();
 	const [image, setImage] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isDragOver, setIsDragOver] = useState(false);
@@ -38,8 +38,8 @@ const ImageUpload = () => {
 		if (selectedImage && validateImage(selectedImage)) {
 			const reader = new FileReader();
 			reader.onloadend = () => {
-        setImage(reader.result);
-        updateNftFormData({ ...nftFormData, base64Image: reader.result });
+				setImage(reader.result);
+				updateNftFormData({ ...nftFormData, base64Image: reader.result, imageFile: selectedImage });
 				setIsLoading(false);
 			};
 			reader.readAsDataURL(selectedImage);

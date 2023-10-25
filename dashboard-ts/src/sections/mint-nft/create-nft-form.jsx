@@ -40,7 +40,7 @@ const CreateNFTForm = () => {
 						/>
 					</Grid>
 					{/* <img
-						src={`https://ipfs.io/ipfs/bafybeifvb2q4eintt7bgrhhjmyvjm4miqtfj2jdomyve2pjhlyp7cvua2y/randomName`}
+						src={`https://ipfs.io/ipfs/bafybeieio4pkq73mzp6bjex7qhrd2hsl5i7wgs25unc52e6g2sbyuhyori/Screenshot%20from%202023-10-25%2015-32-34.png`}
 						alt=''
 					/> */}
 				</Grid>

@@ -11,11 +11,12 @@ export async function storeAsset(title, description, base64Image, fileName) {
     const metadata = await client.store({
         name: title,
         description: description,
-        image: new File(
-            [binaryData],
-            fileName,
-            { type: 'image/jpg' }
-        ),
+        // image: new File(
+        //     [binaryData],
+        //     fileName,
+        //     { type: 'image/jpg' }
+        // ),
+        image: base64Image,
     });
 
     console.log("Metadata stored on Filecoin and IPFS with URL:", metadata.url);

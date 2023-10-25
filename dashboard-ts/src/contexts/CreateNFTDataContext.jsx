@@ -6,7 +6,8 @@ export const CreateNFTDataContext = createContext({
 		binaryImage: '',
 		title: '',
 		description: '',
-		price: ''
+		price: '',
+		imageFile: ''
 	},
 	updateNftFormData: () => {}
 });
@@ -17,7 +18,8 @@ export function CreateNFTDataContextProvider ({children}) {
 		binaryImage: '',
 		title: '',
 		description: '',
-		price: ''
+		price: '',
+		imageFile: ''
 	});
 
 	const updateNftFormData = newNftFormData => {
