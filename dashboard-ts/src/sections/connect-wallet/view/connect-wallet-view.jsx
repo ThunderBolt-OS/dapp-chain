@@ -28,7 +28,7 @@ function ConnectButton() {
 				horizontal: 'right'
 			}
 		});
-		router.push('/');
+		router.push('/seller-or-buyer');
 	};
 
 	// if (isMetaMaskConnected)

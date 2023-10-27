@@ -13,11 +13,14 @@ import { useWallet } from 'src/contexts/WalletContext';
 import { generateAvatarURL } from '@cfx-kit/wallet-avatar';
 import { useRouter } from 'src/routes/hooks';
 
+import { useSetUser } from 'src/contexts/SellerOrBuyerContext';
+
 // ----------------------------------------------------------------------
 
 export default function Nav({ openNav, onCloseNav }) {
 	const { metaMaskData, disconnectMetaMask } = useWallet();
-	const { accounts, balanceOfEactAccount } = metaMaskData;
+	const { accounts, isMetaMaskConnected } = metaMaskData;
+	const { sellerOrBuyer } = useSetUser();
 	const pathname = usePathname();
 
 	const upLg = useResponsive('up', 'lg');
@@ -56,7 +59,10 @@ export default function Nav({ openNav, onCloseNav }) {
 				display: 'flex',
 				borderRadius: 1.5,
 				alignItems: 'center',
-				bgcolor: theme => alpha(theme.palette.grey[500], 0.12)
+				bgcolor: theme =>
+					isMetaMaskConnected
+						? alpha(theme.palette.success.main, 0.12)
+						: alpha(theme.palette.error.main, 0.12)
 			}}
 		>
 			<Avatar
@@ -64,16 +70,27 @@ export default function Nav({ openNav, onCloseNav }) {
 				alt='photoURL'
 				sx={{ width: 37, height: 37, bgcolor: 'background.neutral' }}
 			/>
-
-			<Box sx={{ ml: 2 }}>
-				<Typography variant='subtitle2'>{clipAddress(accounts[0])}</Typography>
-				<Typography
-					variant='body2'
-					sx={{ color: 'text.secondary' }}
-				>
-					{0.324} ETH
-				</Typography>
-			</Box>
+			{isMetaMaskConnected ? (
+				<Box sx={{ ml: 2 }}>
+					<Typography variant='subtitle2'>{clipAddress(accounts[0])}</Typography>
+					<Typography
+						variant='body2'
+						sx={{ color: 'success.main' }}
+					>
+						Connected
+					</Typography>
+				</Box>
+			) : (
+				<Box sx={{ ml: 2 }}>
+					{/* <Typography variant='subtitle2'>{clipAddress(accounts[0])}</Typography> */}
+					<Typography
+						variant='body2'
+						sx={{ color: 'error.main' }}
+					>
+						Disconnected
+					</Typography>
+				</Box>
+			)}
 		</Box>
 	);
 
@@ -106,7 +123,11 @@ export default function Nav({ openNav, onCloseNav }) {
 				/>
 
 				<Box sx={{ textAlign: 'center' }}>
-					<Typography variant='h6'>Get more?</Typography>
+					{sellerOrBuyer.isSeller ? (
+						<Typography variant='h6'>I am Seller</Typography>
+					) : (
+						<Typography variant='h6'>I am Buyer</Typography>
+					)}
 
 					<Typography
 						variant='body2'

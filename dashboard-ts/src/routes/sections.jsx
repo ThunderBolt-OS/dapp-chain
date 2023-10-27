@@ -9,6 +9,7 @@ export const ConnectPage = lazy(() => import('src/pages/connect-wallet'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const MintNFT = lazy(() => import('src/pages/mint-nft'));
+export const SellerOrBuyer = lazy(() => import('src/pages/seller-or-buyer'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const ProductsPage = lazy(() => import('src/pages/products'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
@@ -20,6 +21,10 @@ export default function Router() {
 		{
 			path: '/connect',
 			element: <ConnectPage />
+		},
+		{
+			path: '/seller-or-buyer',
+			element: <SellerOrBuyer />
 		},
 		{
 			element: (

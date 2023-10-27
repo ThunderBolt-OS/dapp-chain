@@ -12,7 +12,7 @@ export const CreateNFTDataContext = createContext({
 	updateNftFormData: () => {}
 });
 
-export function CreateNFTDataContextProvider ({children}) {
+export function CreateNFTDataContextProvider({ children }) {
 	const [nftFormData, setNftFormData] = useState({
 		base64Image: '',
 		binaryImage: '',
@@ -34,12 +34,8 @@ export function CreateNFTDataContextProvider ({children}) {
 		updateNftFormData
 	};
 
-	return (
-		<CreateNFTDataContext.Provider value={CreateNFTDataContextProps}>
-			{children}
-		</CreateNFTDataContext.Provider>
-	);
-};
+	return <CreateNFTDataContext.Provider value={CreateNFTDataContextProps}>{children}</CreateNFTDataContext.Provider>;
+}
 
 export function useCreateNFT() {
 	const context = useContext(CreateNFTDataContext);

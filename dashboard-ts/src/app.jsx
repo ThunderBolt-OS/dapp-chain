@@ -10,7 +10,9 @@ import { WalletProvider } from './contexts/WalletContext';
 
 import { SnackbarProvider } from 'notistack';
 
+// importing context providers
 import { CreateNFTDataContextProvider } from 'src/contexts/CreateNFTDataContext';
+import { SellerOrBuyerContextProvider } from './contexts/SellerOrBuyerContext';
 
 // ----------------------------------------------------------------------
 
@@ -21,9 +23,11 @@ export default function App() {
 		<ThemeProvider>
 			<SnackbarProvider>
 				<WalletProvider>
-					<CreateNFTDataContextProvider>
-						<Router />
-					</CreateNFTDataContextProvider>
+					<SellerOrBuyerContextProvider>
+						<CreateNFTDataContextProvider>
+							<Router />
+						</CreateNFTDataContextProvider>
+					</SellerOrBuyerContextProvider>
 				</WalletProvider>
 			</SnackbarProvider>
 		</ThemeProvider>

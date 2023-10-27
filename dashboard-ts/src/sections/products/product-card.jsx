@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Box, Link, Card, Stack, Typography } from '@mui/material';
+import { Box, Link, Card, Stack, Typography, Avatar, Chip } from '@mui/material';
 
 import { fCurrency } from 'src/utils/format-number';
 
@@ -83,8 +83,19 @@ export default function ShopProductCard({ product }) {
 					alignItems='center'
 					justifyContent='space-between'
 				>
-					<ColorPreview colors={product.colors} />
-					{renderPrice}
+					{/* <ColorPreview colors={product.colors} /> */}
+
+					{0.3201}
+					<Chip
+						avatar={
+							<Avatar
+								alt='Ethereum'
+								src='/assets/ethereum.png'
+							/>
+						}
+						label='ETH'
+						// color={`${price === '' ? 'default' : 'primary'}`}
+					/>
 				</Stack>
 			</Stack>
 		</Card>

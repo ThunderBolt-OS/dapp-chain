@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-import { Stack, Container, Unstable_Grid2 as Grid, Typography } from '@mui/material';
+import { Stack, Container, Unstable_Grid2 as Grid, Typography, Button } from '@mui/material';
+import Iconify from 'src/components/iconify';
+import { useRouter } from 'src/routes/hooks';
 
 import { products } from 'src/_mock/products';
 
@@ -13,6 +15,7 @@ import ProductCartWidget from '../product-cart-widget';
 
 export default function ProductsView() {
 	const [openFilter, setOpenFilter] = useState(false);
+	const router = useRouter();
 
 	const handleOpenFilter = () => {
 		setOpenFilter(true);
@@ -22,14 +25,29 @@ export default function ProductsView() {
 		setOpenFilter(false);
 	};
 
+	const handleOnClickAddProduct = () => {
+		router.push('/create-nft');
+	};
+
 	return (
 		<Container>
-			<Typography
-				variant='h4'
-				sx={{ mb: 5 }}
+			<Stack
+				direction='row'
+				alignItems='center'
+				justifyContent='space-between'
+				mb={5}
 			>
-				Products
-			</Typography>
+				<Typography variant='h4'>My Products</Typography>
+
+				<Button
+					variant='contained'
+					color='inherit'
+					startIcon={<Iconify icon='eva:plus-fill' />}
+					onClick={handleOnClickAddProduct}
+				>
+					Add Product
+				</Button>
+			</Stack>
 
 			<Stack
 				direction='row'
