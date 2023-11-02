@@ -5,12 +5,15 @@ import { storeAsset } from 'src/utils/generateIPFSUrl';
 import { set } from 'lodash';
 import { NFTKoMintMaar } from 'src/utils/mintNFTFromIPFS';
 
+import ConfettiExplosion from 'react-confetti-explosion';
+
 const NFTFormFields = ({ loading, setLoading }) => {
 	const theme = useTheme();
 	const { nftFormData, updateNftFormData } = useCreateNFT();
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState('');
+	const [showConfetti, setShowConfetti] = useState(false); 
 
 	const handlePriceChange = e => {
 		const newPrice = e.target.value;
@@ -57,6 +60,7 @@ const NFTFormFields = ({ loading, setLoading }) => {
 		await NFTKoMintMaar(ifpsUrl);
 		console.log('ipfs url', ifpsUrl);
 		setLoading(false);
+		setShowConfetti(true); // Show confetti after minting is done
 	};
 
 	return (
@@ -93,7 +97,6 @@ const NFTFormFields = ({ loading, setLoading }) => {
 										/>
 									}
 									label='ETH'
-									// color={`${price === '' ? 'default' : 'primary'}`}
 								/>
 							</InputAdornment>
 						)
@@ -122,6 +125,7 @@ const NFTFormFields = ({ loading, setLoading }) => {
 					</Button>
 				</Stack>
 			</Stack>
+			{showConfetti && <ConfettiExplosion />} 
 		</Box>
 	);
 };

@@ -1,0 +1,16 @@
+{
+  "name": "test-json-rpc",
+  "version": "1.0.0",
+  "description": "testing somaiya chain json rpc url",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "author": "ThunderBolt-OS",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "nodemon": "^3.0.1"
+  }
+}

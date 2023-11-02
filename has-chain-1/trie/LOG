@@ -16,3 +16,27 @@
 16:52:34.724283 version@stat F·[1] S·269B[269B] Sc·[0.25]
 16:52:34.761004 db@janitor F·3 G·0
 16:52:34.761239 db@open done T·53.293903ms
+=============== Oct 26, 2023 (IST) ===============
+12:28:37.639486 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+12:28:37.639561 version@stat F·[1] S·269B[269B] Sc·[0.25]
+12:28:37.639567 db@open opening
+12:28:37.639582 journal@recovery F·1
+12:28:37.639661 journal@recovery recovering @3
+12:28:37.643052 memdb@flush created L0@5 N·94 S·28KiB "\x02H8..\xa9\x83\xc0,v91":"\xf9\xe4]..\xb6\xf7B,v43"
+12:28:37.643148 version@stat F·[2] S·28KiB[28KiB] Sc·[0.50]
+12:28:37.654719 db@janitor F·4 G·0
+12:28:37.654726 db@open done T·15.156297ms
+12:36:48.177084 db@close closing
+12:36:48.177189 db@close done T·102.861µs
+=============== Nov 2, 2023 (IST) ===============
+14:19:48.183999 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:19:48.184288 version@stat F·[2] S·28KiB[28KiB] Sc·[0.50]
+14:19:48.184296 db@open opening
+14:19:48.184317 journal@recovery F·1
+14:19:48.184586 journal@recovery recovering @6
+14:19:48.187488 memdb@flush created L0@8 N·1 S·269B "\xd5v-..-\xe8b,v98":"\xd5v-..-\xe8b,v98"
+14:19:48.187632 version@stat F·[3] S·28KiB[28KiB] Sc·[0.75]
+14:19:48.198423 db@janitor F·5 G·0
+14:19:48.198430 db@open done T·14.130637ms
+14:21:35.344908 db@close closing
+14:21:35.344944 db@close done T·34.728µs
