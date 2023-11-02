@@ -7,9 +7,6 @@ import { useRouter } from 'src/routes/hooks';
 import { products } from 'src/_mock/products';
 
 import ProductCard from '../product-card';
-import ProductSort from '../product-sort';
-import ProductFilters from '../product-filters';
-import ProductCartWidget from '../product-cart-widget';
 
 // ----------------------------------------------------------------------
 
@@ -25,10 +22,6 @@ export default function ProductsView() {
 		setOpenFilter(false);
 	};
 
-	const handleOnClickAddProduct = () => {
-		router.push('/create-nft');
-	};
-
 	return (
 		<Container>
 			<Stack
@@ -38,38 +31,6 @@ export default function ProductsView() {
 				mb={5}
 			>
 				<Typography variant='h4'>My Products</Typography>
-
-				<Button
-					variant='contained'
-					color='inherit'
-					startIcon={<Iconify icon='eva:plus-fill' />}
-					onClick={handleOnClickAddProduct}
-				>
-					Add Product
-				</Button>
-			</Stack>
-
-			<Stack
-				direction='row'
-				alignItems='center'
-				flexWrap='wrap-reverse'
-				justifyContent='flex-end'
-				sx={{ mb: 5 }}
-			>
-				<Stack
-					direction='row'
-					spacing={1}
-					flexShrink={0}
-					sx={{ my: 1 }}
-				>
-					<ProductFilters
-						openFilter={openFilter}
-						onOpenFilter={handleOpenFilter}
-						onCloseFilter={handleCloseFilter}
-					/>
-
-					<ProductSort />
-				</Stack>
 			</Stack>
 
 			<Grid
@@ -88,7 +49,6 @@ export default function ProductsView() {
 				))}
 			</Grid>
 
-			<ProductCartWidget />
 		</Container>
 	);
 }

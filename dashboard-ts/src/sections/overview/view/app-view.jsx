@@ -1,7 +1,9 @@
 import { faker } from '@faker-js/faker';
-import { Container, Unstable_Grid2 as Grid, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Container, Unstable_Grid2 as Grid, Typography, Skeleton, useTheme } from '@mui/material';
 
 import Iconify from 'src/components/iconify';
+import { fShortenNumber } from 'src/utils/format-number';
 
 import AppTasks from '../app-tasks';
 import AppNewsUpdate from '../app-news-update';
@@ -16,6 +18,115 @@ import AppConversionRates from '../app-conversion-rates';
 // ----------------------------------------------------------------------
 
 export default function AppView() {
+	const theme = useTheme();
+
+	// state for number of peers
+	const [noOfPeers, setNoOfPeers] = useState(null);
+
+	// state for number of blocks
+	const [noOfBlocks, setNoOfBlocks] = useState(null);
+
+	// state of estimate gas fees
+	const [estimateGasFees, setEstimateGasFees] = useState(null);
+
+	// state of system status
+	const [systemStatus, setSystemStatus] = useState(null);
+
+	useEffect(() => {
+		const jsonRpcUrl = 'https://9431-2405-204-2187-ee18-192f-98d4-5796-1dfc.ngrok-free.app/';
+
+		// fetch for fetching number of peers
+		fetch(jsonRpcUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				jsonrpc: '2.0',
+				method: 'net_peerCount',
+				params: [],
+				id: 1
+			})
+		})
+			.then(response => response.json())
+			.then(data => {
+				setNoOfPeers(data.result);
+			})
+			.catch(error => {
+				console.log(error);
+			});
+
+		// fetch for fetching number of blocks
+		fetch(jsonRpcUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				jsonrpc: '2.0',
+				method: 'eth_blockNumber',
+				params: [],
+				id: 1
+			})
+		})
+			.then(response => response.json())
+			.then(data => {
+				setNoOfBlocks(data.result);
+			})
+			.catch(error => {
+				console.log(error);
+			});
+
+		// fetch for fetching estimated gas fees
+		// !TODO: not working
+		fetch(jsonRpcUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				jsonrpc: '2.0',
+				method: 'eth_estimateGas',
+				params: [],
+				id: 1
+			})
+		})
+			.then(response => response.json())
+			.then(data => {
+				setEstimateGasFees(data.result);
+				console.log('this is estimate gas fees');
+				console.log(data.result);
+			})
+			.catch(error => {
+				console.log(error);
+			});
+
+		
+		// fetch for fetching system status
+		fetch(jsonRpcUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				jsonrpc: '2.0',
+				method: 'eth_syncing',
+				params: [],
+				id: 1
+			})
+		})
+			.then(response => response.json())
+			.then(data => {
+				setSystemStatus(data.result);
+
+				console.log('system status', data.result);
+			})
+			.catch(error => {
+				console.log(error);
+			});
+		
+	}, []);
+
 	return (
 		<Container maxWidth='xl'>
 			<Typography
@@ -34,17 +145,32 @@ export default function AppView() {
 					sm={6}
 					md={3}
 				>
-					<AppWidgetSummary
-						title='Weekly Sales'
-						total={714000}
-						color='success'
-						icon={
-							<img
-								alt='icon'
-								src='/assets/icons/glass/ic_glass_bag.png'
+					{noOfPeers === null ? (
+						<>
+							<Skeleton
+								variant='rectangular'
+								width='100%'
+								height='100%'
+								sx={{
+									borderRadius: '13px'
+								}}
 							/>
-						}
-					/>
+						</>
+					) : (
+						<>
+							<AppWidgetSummary
+								title='No. of Peers'
+								total={fShortenNumber(noOfPeers)}
+								color='success'
+								icon={
+									<img
+										alt='icon'
+										src='/assets/icons/glass/ic_glass_users.png'
+									/>
+								}
+							/>
+						</>
+					)}
 				</Grid>
 
 				<Grid
@@ -52,17 +178,32 @@ export default function AppView() {
 					sm={6}
 					md={3}
 				>
-					<AppWidgetSummary
-						title='New Users'
-						total={1352831}
-						color='info'
-						icon={
-							<img
-								alt='icon'
-								src='/assets/icons/glass/ic_glass_users.png'
+					{noOfBlocks === null ? (
+						<>
+							<Skeleton
+								variant='rectangular'
+								width='100%'
+								height='100%'
+								sx={{
+									borderRadius: '13px'
+								}}
 							/>
-						}
-					/>
+						</>
+					) : (
+						<>
+							<AppWidgetSummary
+								title='No. of Blocks'
+								total={fShortenNumber(noOfBlocks)}
+								color='info'
+								icon={
+									<img
+										alt='icon'
+										src='/assets/icons/glass/ic_glass_bag.png'
+									/>
+								}
+							/>
+						</>
+					)}
 				</Grid>
 
 				<Grid
@@ -70,17 +211,32 @@ export default function AppView() {
 					sm={6}
 					md={3}
 				>
-					<AppWidgetSummary
-						title='Item Orders'
-						total={1723315}
-						color='warning'
-						icon={
-							<img
-								alt='icon'
-								src='/assets/icons/glass/ic_glass_buy.png'
+					{estimateGasFees === null ? (
+						<>
+							<Skeleton
+								variant='rectangular'
+								width='100%'
+								height='100%'
+								sx={{
+									borderRadius: '13px'
+								}}
 							/>
-						}
-					/>
+						</>
+					) : (
+						<>
+							<AppWidgetSummary
+								title='Estimated Gas Fees'
+								total={fShortenNumber(estimateGasFees)}
+								color='warning'
+								icon={
+									<img
+										alt='icon'
+										src='/assets/icons/glass/ic_glass_buy.png'
+									/>
+								}
+							/>
+						</>
+					)}
 				</Grid>
 
 				<Grid
@@ -88,17 +244,37 @@ export default function AppView() {
 					sm={6}
 					md={3}
 				>
-					<AppWidgetSummary
-						title='Bug Reports'
-						total={234}
-						color='error'
-						icon={
-							<img
-								alt='icon'
-								src='/assets/icons/glass/ic_glass_message.png'
+					{systemStatus === null ? (
+						<>
+							<Skeleton
+								variant='rectangular'
+								width='100%'
+								height='100%'
+								sx={{
+									borderRadius: '13px'
+								}}
 							/>
-						}
-					/>
+						</>
+					) : (
+						<>
+							<AppWidgetSummary
+								title='System Status'
+								total={!systemStatus ? 'Synced' : 'Not Synced'}
+								color={!systemStatus ? 'success' : 'error'}
+								sx={{
+									backgroundColor: !systemStatus
+										? theme.palette.success.lighter
+										: theme.palette.error.lighter
+								}}
+								icon={
+									<img
+										alt='icon'
+										src='/assets/icons/glass/ic_glass_message.png'
+									/>
+								}
+							/>
+						</>
+					)}
 				</Grid>
 
 				<Grid

@@ -15,13 +15,18 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
 				py: 5,
 				borderRadius: 2,
 				...sx
+				// backgroundColor: 'green'
 			}}
 			{...other}
 		>
 			{icon && <Box sx={{ width: 64, height: 64 }}>{icon}</Box>}
 
 			<Stack spacing={0.5}>
-				<Typography variant='h4'>{fShortenNumber(total)}</Typography>
+				{typeof total === 'string' ? (
+					<Typography variant='h4'>{total}</Typography>
+				) : (
+					<Typography variant='h4'>{fShortenNumber(total)}</Typography>
+				)}
 
 				<Typography
 					variant='subtitle2'

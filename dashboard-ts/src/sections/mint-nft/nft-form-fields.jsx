@@ -13,7 +13,7 @@ const NFTFormFields = ({ loading, setLoading }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [price, setPrice] = useState('');
-	const [showConfetti, setShowConfetti] = useState(false); 
+	const [showConfetti, setShowConfetti] = useState(false);
 
 	const handlePriceChange = e => {
 		const newPrice = e.target.value;
@@ -125,7 +125,7 @@ const NFTFormFields = ({ loading, setLoading }) => {
 					</Button>
 				</Stack>
 			</Stack>
-			{showConfetti && <ConfettiExplosion />} 
+			{showConfetti && <ConfettiExplosion />}
 		</Box>
 	);
 };
