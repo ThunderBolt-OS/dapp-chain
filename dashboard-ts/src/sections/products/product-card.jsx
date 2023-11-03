@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Box, Link, Card, Stack, Typography, Avatar, Chip } from '@mui/material';
+import { Box, Link, Card, Stack, Typography, Avatar, Chip, useTheme } from '@mui/material';
 
 import { fCurrency } from 'src/utils/format-number';
 
@@ -9,6 +9,8 @@ import { ColorPreview } from 'src/components/color-utils';
 // ----------------------------------------------------------------------
 
 export default function ShopProductCard({ product }) {
+	const theme = useTheme();
+
 	const renderStatus = (
 		<Label
 			variant='filled'
@@ -58,12 +60,16 @@ export default function ShopProductCard({ product }) {
 	);
 
 	return (
-		<Card>
-			<Box sx={{ pt: '100%', position: 'relative' }}>
+		<Card
+			sx={{
+				borderColor: theme.palette.primary.main
+			}}
+		>
+			{/* <Box sx={{ pt: '100%', position: 'relative' }}>
 				{product.status && renderStatus}
 
 				{renderImg}
-			</Box>
+			</Box> */}
 
 			<Stack
 				spacing={2}
@@ -75,7 +81,9 @@ export default function ShopProductCard({ product }) {
 					variant='subtitle2'
 					noWrap
 				>
-					{product.name}
+					{/* {product.name} */}
+
+					0x234ger0
 				</Link>
 
 				<Stack
