@@ -14,7 +14,7 @@ export default function ShopProductCard({ product }) {
 	const renderStatus = (
 		<Label
 			variant='filled'
-			color={(product.status === 'sale' && 'error') || 'info'}
+			color={product.status === 'sale' ? 'error' : 'info'}
 			sx={{
 				zIndex: 9,
 				top: 16,
@@ -27,81 +27,48 @@ export default function ShopProductCard({ product }) {
 		</Label>
 	);
 
-	const renderImg = (
-		<Box
-			component='img'
-			alt={product.name}
-			src={product.cover}
-			sx={{
-				top: 0,
-				width: 1,
-				height: 1,
-				objectFit: 'cover',
-				position: 'absolute'
-			}}
-		/>
-	);
-
-	const renderPrice = (
-		<Typography variant='subtitle1'>
-			<Typography
-				component='span'
-				variant='body1'
-				sx={{
-					color: 'text.disabled',
-					textDecoration: 'line-through'
-				}}
-			>
-				{product.priceSale && fCurrency(product.priceSale)}
-			</Typography>
-			&nbsp;
-			{fCurrency(product.price)}
-		</Typography>
-	);
+	const clipAddress = address => {
+		if (!address) return '';
+		if (address.length > 10) {
+			const prefix = address.substring(0, 6);
+			const suffix = address.slice(-4);
+			return `${prefix}...${suffix}`;
+		}
+		return address;
+	};
 
 	return (
 		<Card
 			sx={{
-				borderColor: theme.palette.primary.main
+				border: '1px solid',
+				borderColor: product.status === 'sale' ? theme.palette.error.light : theme.palette.primary.light
 			}}
 		>
-			{/* <Box sx={{ pt: '100%', position: 'relative' }}>
-				{product.status && renderStatus}
-
-				{renderImg}
-			</Box> */}
+			{product.status && renderStatus}
 
 			<Stack
 				spacing={2}
 				sx={{ p: 3 }}
 			>
-				<Link
-					color='inherit'
-					underline='hover'
-					variant='subtitle2'
-					noWrap
-				>
-					{/* {product.name} */}
-
-					0x234ger0
-				</Link>
-
+				<Stack variant='row'>
+					<Typography>{/* block number */}[index]</Typography>
+					<Link
+						color='inherit'
+						underline='hover'
+						variant='subtitle2'
+						noWrap
+					>
+						{/* hash value of the block */}
+						{clipAddress('0x234vgwxwqq34bretWQ235HWRTY')}
+					</Link>
+				</Stack>
 				<Stack
 					direction='row'
 					alignItems='center'
 					justifyContent='space-between'
 				>
-
-					{0.3201}
-					<Chip
-						avatar={
-							<Avatar
-								alt='Ethereum'
-								src='/assets/ethereum.png'
-							/>
-						}
-						label='ETH'
-					/>
+					Miner: {23}
+					<Typography>Size: {23}</Typography>
 				</Stack>
 			</Stack>
 		</Card>
