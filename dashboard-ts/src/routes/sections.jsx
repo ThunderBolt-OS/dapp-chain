@@ -12,6 +12,7 @@ export const MintNFT = lazy(() => import('src/pages/mint-nft'));
 export const SellerOrBuyer = lazy(() => import('src/pages/seller-or-buyer'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const ProductsPage = lazy(() => import('src/pages/products'));
+export const ProductDetailPage = lazy(() => import('src/pages/product-detail'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 // ----------------------------------------------------------------------
@@ -38,6 +39,10 @@ export default function Router() {
 				{ element: <PrivateRoute element={<IndexPage />} />, index: true },
 				{ path: 'user', element: <PrivateRoute element={<UserPage />} /> },
 				{ path: 'products', element: <ProductsPage /> },
+				{
+					path: 'product-detail/:hash',
+					element: <ProductDetailPage />
+				},
 				{ path: 'blog', element: <BlogPage /> },
 				{
 					path: 'create-nft',

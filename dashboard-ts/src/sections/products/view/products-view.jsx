@@ -1,27 +1,29 @@
-import { useEffect, useState } from 'react';
-import { Stack, Container, Grid, Typography, Pagination, useTheme, Box } from '@mui/material'; // Added Pagination component
+import React, { useEffect, useState } from 'react';
+import { Stack, Container, Grid, Typography, Pagination, useTheme, Box } from '@mui/material';
 import { JSON_RPC_URL } from 'src/constants';
 import { useRouter } from 'src/routes/hooks';
 import { fShortenNumber } from 'src/utils/format-number';
-import { products } from 'src/_mock/products';
 import ProductCard from '../product-card';
+import { useInterval } from 'src/hooks/use-interval';
 
 export default function ProductsView() {
 	const router = useRouter();
 	const theme = useTheme();
 
-	// state for the block number
+	// State for the block number
 	const [blockNumber, setBlockNumber] = useState(null);
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 50; // Number of blocks to fetch per page
 
 	const promises = [];
-	const blockDataArray = [];
 
-	useEffect(() => {
+	// State to manage block data
+	const [blockData, setBlockData] = useState([]);
+
+	useInterval(() => {
 		const jsonRpcUrl = JSON_RPC_URL;
 
-		// Fetch for fetching the integer of the current block number the client is on.
+		// Fetch the integer of the current block number the client is on.
 		fetch(jsonRpcUrl, {
 			method: 'POST',
 			headers: {
@@ -41,17 +43,19 @@ export default function ProductsView() {
 			.catch(error => {
 				console.log(error);
 			});
-	}, []);
+	}, 1000);
 
 	useEffect(() => {
 		const jsonRpcUrl = JSON_RPC_URL;
 
 		if (blockNumber) {
-			// Fetch a limited number of blocks based on pagination
-			const startIndex = (currentPage - 1) * itemsPerPage + 1;
-			const endIndex = Math.min(startIndex + itemsPerPage - 1, blockNumber);
+			// Calculate the range of blocks to fetch based on pagination
+			const startIndex = blockNumber - (currentPage - 1) * itemsPerPage;
+			const endIndex = Math.max(startIndex - itemsPerPage + 1, 1);
 
-			for (let i = startIndex; i <= endIndex; i++) {
+			const reversedBlockData = [];
+
+			for (let i = startIndex; i >= endIndex; i--) {
 				promises.push(
 					fetch(jsonRpcUrl, {
 						method: 'POST',
@@ -73,16 +77,14 @@ export default function ProductsView() {
 					return Promise.all(responses.map(response => response.json()));
 				})
 				.then(dataArray => {
-					blockDataArray.push(...dataArray);
-					console.log('Block data for page', currentPage, ':', blockDataArray);
+					reversedBlockData.push(...dataArray.reverse());
+					setBlockData(reversedBlockData);
 				})
 				.catch(error => {
 					console.log(error);
 				});
 		}
 	}, [blockNumber, currentPage]);
-
-	console.log(blockDataArray);
 
 	const handlePageChange = (event, page) => {
 		setCurrentPage(page);
@@ -103,15 +105,15 @@ export default function ProductsView() {
 				container
 				spacing={3}
 			>
-				{blockDataArray.map(blockData => (
+				{blockData.reverse().map(data => (
 					<Grid
 						item
-						// key={blockData.result.number}
+						key={data.id}
 						xs={12}
 						sm={6}
 						md={3}
 					>
-						<ProductCard blockData={blockData.result} />
+						<ProductCard blockData={data} />
 					</Grid>
 				))}
 			</Grid>
@@ -130,8 +132,8 @@ export default function ProductsView() {
 					page={currentPage}
 					onChange={handlePageChange}
 					color='primary'
-					// boundaryCount={3}
-					// siblingCount={2}
+					showFirstButton
+					showLastButton
 				/>
 			</Box>
 		</Container>

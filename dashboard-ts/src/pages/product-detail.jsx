@@ -4,14 +4,14 @@ import { ProductDetailView } from 'src/sections/product-detail/view';
 
 // ----------------------------------------------------------------------
 
-export default function ProductsPage({ title, description }) {
+export default function ProductsPage() {
 	return (
 		<>
 			<Helmet>
 				<title> Product Detail | Minimal UI </title>
 			</Helmet>
 
-			<ProductsView />
+			<ProductDetailView />
 		</>
 	);
 }

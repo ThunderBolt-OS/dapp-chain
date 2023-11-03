@@ -1,32 +1,31 @@
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Link, Card, Stack, Typography, Avatar, Chip, useTheme } from '@mui/material';
-
-import { fCurrency } from 'src/utils/format-number';
+import { Card, Stack, Typography, Link, useTheme, Paper } from '@mui/material';
 
 import Label from 'src/components/label';
-import { ColorPreview } from 'src/components/color-utils';
-
-// ----------------------------------------------------------------------
+import { useRouter } from 'src/routes/hooks';
 
 export default function ShopProductCard({ blockData }) {
 	const theme = useTheme();
+	const route = useRouter();
 
-	const renderStatus = (
-		<Label
-			variant='filled'
-			color={product.status === 'sale' ? 'error' : 'info'}
-			sx={{
-				zIndex: 9,
-				top: 16,
-				right: 16,
-				position: 'absolute',
-				textTransform: 'uppercase'
-			}}
-		>
-			{/* {blockData.status} */}
-			New
-		</Label>
-	);
+	const renderStatus = blockData.result.timestamp
+		? (new Date() - new Date(parseInt(blockData.result.timestamp, 16))) / 3600000 < 1 && (
+				<Label
+					variant='filled'
+					color='error'
+					sx={{
+						zIndex: 9,
+						top: 16,
+						right: 16,
+						position: 'absolute',
+						textTransform: 'uppercase'
+					}}
+				>
+					New
+				</Label>
+		  )
+		: null;
 
 	const clipAddress = address => {
 		if (!address) return '';
@@ -39,43 +38,55 @@ export default function ShopProductCard({ blockData }) {
 	};
 
 	return (
-		<Card
-			sx={{
-				border: '1px solid',
-				borderColor: product.status === 'sale' ? theme.palette.error.light : theme.palette.primary.light
+		<Paper
+			elevation={3}
+			sx={{ backgroundColor: theme.palette.primary.lighter, borderRadius: '8px', cursor: 'pointer' }}
+			onClick={() => {
+				route.push(`/product-detail/${blockData.result.hash}`);
 			}}
 		>
-			{/* {product.status && renderStatus} */}
-
 			<Stack
 				spacing={2}
 				sx={{ p: 3 }}
 			>
-				<Stack variant='row'>
-					<Typography>{/* block number */}[index]</Typography>
-					<Link
-						color='inherit'
-						underline='hover'
-						variant='subtitle2'
-						noWrap
-					>
-						{/* hash value of the block */}
-						{clipAddress('0x234vgwxwqq34bretWQ235HWRTY')}
-					</Link>
-				</Stack>
+				{renderStatus}
+				<Typography
+					variant='h6'
+					sx={{ fontWeight: 'bold', marginBottom: 1 }}
+				>
+					Block #{blockData.id}
+				</Typography>
 				<Stack
 					direction='row'
 					alignItems='center'
 					justifyContent='space-between'
 				>
-					Miner: {blockData.miner}
-					<Typography>Size: {blockData.size}</Typography>
+					<Typography variant='body1'>Miner: {parseInt(blockData.result.miner, 16)}</Typography>
+					<Typography variant='body1'>Size: {parseInt(blockData.result.size, 16)} bytes</Typography>
 				</Stack>
+				<Link
+					color='primary'
+					underline='hover'
+					variant='subtitle1'
+					noWrap
+					onClick={() => {
+						route.push(`/product-detail/${blockData.result.hash}`);
+					}}
+					sx={{ cursor: 'pointer' }}
+				>
+					{clipAddress(blockData.result.hash)}
+				</Link>
+				<Typography
+					variant='body2'
+					sx={{ fontStyle: 'italic' }}
+				>
+					Time: {new Date(parseInt(blockData.result.timestamp, 16)).toString()}
+				</Typography>
 			</Stack>
-		</Card>
+		</Paper>
 	);
 }
 
 ShopProductCard.propTypes = {
-	product: PropTypes.object
+	blockData: PropTypes.object.isRequired
 };

@@ -15,6 +15,7 @@ import AppWidgetSummary from '../app-widget-summary';
 import AppTrafficBySite from '../app-traffic-by-site';
 import AppCurrentSubject from '../app-current-subject';
 import AppConversionRates from '../app-conversion-rates';
+import { useInterval } from 'src/hooks/use-interval';
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +34,7 @@ export default function AppView() {
 	// state of system status
 	const [systemStatus, setSystemStatus] = useState(null);
 
-	useEffect(() => {
+	useInterval(() => {
 		const jsonRpcUrl = JSON_RPC_URL;
 
 		// fetch for fetching number of peers
@@ -125,7 +126,7 @@ export default function AppView() {
 			.catch(error => {
 				console.log(error);
 			});
-	}, []);
+	}, 1000);
 
 	return (
 		<Container maxWidth='xl'>
