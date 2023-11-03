@@ -4,6 +4,7 @@ import { Container, Unstable_Grid2 as Grid, Typography, Skeleton, useTheme } fro
 
 import Iconify from 'src/components/iconify';
 import { fShortenNumber } from 'src/utils/format-number';
+import { JSON_RPC_URL } from 'src/constants';
 
 import AppTasks from '../app-tasks';
 import AppNewsUpdate from '../app-news-update';
@@ -33,7 +34,7 @@ export default function AppView() {
 	const [systemStatus, setSystemStatus] = useState(null);
 
 	useEffect(() => {
-		const jsonRpcUrl = 'https://9431-2405-204-2187-ee18-192f-98d4-5796-1dfc.ngrok-free.app/';
+		const jsonRpcUrl = JSON_RPC_URL;
 
 		// fetch for fetching number of peers
 		fetch(jsonRpcUrl, {
@@ -50,7 +51,8 @@ export default function AppView() {
 		})
 			.then(response => response.json())
 			.then(data => {
-				setNoOfPeers(data.result);
+				const value = parseInt(data.result, 16);
+				setNoOfPeers(value);
 			})
 			.catch(error => {
 				console.log(error);
@@ -101,7 +103,6 @@ export default function AppView() {
 				console.log(error);
 			});
 
-		
 		// fetch for fetching system status
 		fetch(jsonRpcUrl, {
 			method: 'POST',
@@ -124,7 +125,6 @@ export default function AppView() {
 			.catch(error => {
 				console.log(error);
 			});
-		
 	}, []);
 
 	return (
@@ -160,7 +160,7 @@ export default function AppView() {
 						<>
 							<AppWidgetSummary
 								title='No. of Peers'
-								total={fShortenNumber(noOfPeers)}
+								total={noOfPeers}
 								color='success'
 								icon={
 									<img
@@ -193,7 +193,7 @@ export default function AppView() {
 						<>
 							<AppWidgetSummary
 								title='No. of Blocks'
-								total={fShortenNumber(noOfBlocks)}
+								total={noOfBlocks}
 								color='info'
 								icon={
 									<img
@@ -226,7 +226,7 @@ export default function AppView() {
 						<>
 							<AppWidgetSummary
 								title='Estimated Gas Fees'
-								total={fShortenNumber(estimateGasFees)}
+								total={estimateGasFees}
 								color='warning'
 								icon={
 									<img

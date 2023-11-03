@@ -33,7 +33,7 @@ const PRODUCT_COLOR = ['#00AB55', '#000000', '#FFFFFF', '#FFC0CB', '#FF4842', '#
 
 // ----------------------------------------------------------------------
 
-export const products = [...Array(24)].map((_, index) => {
+export const products = [...Array(4)].map((_, index) => {
 	const setIndex = index + 1;
 
 	return {

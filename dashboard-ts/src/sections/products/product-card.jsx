@@ -83,7 +83,6 @@ export default function ShopProductCard({ product }) {
 					alignItems='center'
 					justifyContent='space-between'
 				>
-					{/* <ColorPreview colors={product.colors} /> */}
 
 					{0.3201}
 					<Chip
@@ -94,7 +93,6 @@ export default function ShopProductCard({ product }) {
 							/>
 						}
 						label='ETH'
-						// color={`${price === '' ? 'default' : 'primary'}`}
 					/>
 				</Stack>
 			</Stack>

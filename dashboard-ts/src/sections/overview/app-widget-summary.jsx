@@ -22,11 +22,7 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
 			{icon && <Box sx={{ width: 64, height: 64 }}>{icon}</Box>}
 
 			<Stack spacing={0.5}>
-				{typeof total === 'string' ? (
-					<Typography variant='h4'>{total}</Typography>
-				) : (
-					<Typography variant='h4'>{fShortenNumber(total)}</Typography>
-				)}
+				<Typography variant='h4'>{parseInt(total, 16)}</Typography>
 
 				<Typography
 					variant='subtitle2'
