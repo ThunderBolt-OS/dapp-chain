@@ -8,7 +8,7 @@ import { ColorPreview } from 'src/components/color-utils';
 
 // ----------------------------------------------------------------------
 
-export default function ShopProductCard({ product }) {
+export default function ShopProductCard({ blockData }) {
 	const theme = useTheme();
 
 	const renderStatus = (
@@ -23,7 +23,8 @@ export default function ShopProductCard({ product }) {
 				textTransform: 'uppercase'
 			}}
 		>
-			{product.status}
+			{/* {blockData.status} */}
+			New
 		</Label>
 	);
 
@@ -44,7 +45,7 @@ export default function ShopProductCard({ product }) {
 				borderColor: product.status === 'sale' ? theme.palette.error.light : theme.palette.primary.light
 			}}
 		>
-			{product.status && renderStatus}
+			{/* {product.status && renderStatus} */}
 
 			<Stack
 				spacing={2}
@@ -67,8 +68,8 @@ export default function ShopProductCard({ product }) {
 					alignItems='center'
 					justifyContent='space-between'
 				>
-					Miner: {23}
-					<Typography>Size: {23}</Typography>
+					Miner: {blockData.miner}
+					<Typography>Size: {blockData.size}</Typography>
 				</Stack>
 			</Stack>
 		</Card>
