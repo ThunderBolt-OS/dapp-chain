@@ -10,13 +10,13 @@ const PrivateRoute = ({ element }) => {
 	const router = useRouter();
 
 	useEffect(() => {
-		// if (!isMetaMaskConnected) {
-		// 	router.push('/connect');
-		// }
+		if (!isMetaMaskConnected) {
+			router.push('/connect');
+		}
 	}, []);
 
-	// return isMetaMaskConnected ? element : null;
-	return element;
+	return isMetaMaskConnected ? element : null;
+	// return element;
 };
 
 export default PrivateRoute;

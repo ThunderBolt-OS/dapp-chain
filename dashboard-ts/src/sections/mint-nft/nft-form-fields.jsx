@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Box, Button, Grid, Stack, TextField, InputAdornment, Typography, Chip, Avatar, useTheme } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import { useCreateNFT } from 'src/contexts/CreateNFTDataContext';
 import { storeAsset } from 'src/utils/generateIPFSUrl';
 import { set } from 'lodash';
 import { NFTKoMintMaar } from 'src/utils/mintNFTFromIPFS';
-
 import ConfettiExplosion from 'react-confetti-explosion';
+import { listNFTForSale } from 'src/utils/listNftForSale';
 
 const NFTFormFields = ({ loading, setLoading }) => {
 	const theme = useTheme();
+	const { enqueueSnackbar } = useSnackbar();
 	const { nftFormData, updateNftFormData } = useCreateNFT();
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
@@ -57,10 +59,19 @@ const NFTFormFields = ({ loading, setLoading }) => {
 			nftFormData.imageFile,
 			'testImage'
 		);
-		await NFTKoMintMaar(ifpsUrl);
+		await listNFTForSale(ifpsUrl, price, description);
+
 		console.log('ipfs url', ifpsUrl);
 		setLoading(false);
 		setShowConfetti(true); // Show confetti after minting is done
+		enqueueSnackbar('NFT Minted Successfully', {
+			variant: 'success',
+			autoHideDuration: 2000,
+			anchorOrigin: {
+				vertical: 'bottom',
+				horizontal: 'right'
+			}
+		});
 	};
 
 	return (
