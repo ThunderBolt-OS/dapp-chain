@@ -4,7 +4,9 @@ import { ethers, JsonRpcProvider, formatUnits, parseUnits } from 'ethers';
 import { useRouter } from 'src/routes/hooks';
 import axios from 'axios';
 
-const marketplaceAddress = '0xED7c84E25Ef97B4561A1273eC9676b441E2543B0';
+import { convertIPFSUrl } from 'src/utils/convertIPFSUrl';
+import { NoNFTs } from 'src/components';
+import { MARKETPLACE_CONTRACT_ADDRESS } from 'src/constants';
 import NFTMarketplace from 'src/artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
 
 const MyNFTsView = () => {
@@ -16,18 +18,13 @@ const MyNFTsView = () => {
 		loadNFTs();
     }, []);
 
-    function convertIPFSUrl(inputUrl) {
-		// Replace "ipfs://" with "https://ipfs.io/ipfs/"
-		const outputUrl = inputUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
-		return outputUrl;
-    }
     
 	async function loadNFTs() {
 
 		const provider = new ethers.BrowserProvider(window.ethereum);
 		const signer = await provider.getSigner();
 
-		const marketplaceContract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer);
+		const marketplaceContract = new ethers.Contract(MARKETPLACE_CONTRACT_ADDRESS, NFTMarketplace.abi, signer);
 		const data = await marketplaceContract.fetchMyNFTs();
 
 		const items = await Promise.all(
@@ -40,10 +37,9 @@ const MyNFTsView = () => {
 					tokenId: i.tokenId,
 					seller: i.seller,
 					owner: i.owner,
-					image: meta.data.image,
+					image: convertIPFSUrl(meta.data.image),
 					tokenURI
-                };
-                console.log('item:', item)
+				};
 				return item;
 			})
 		);
@@ -57,26 +53,10 @@ const MyNFTsView = () => {
 
 	if (loadingState === 'loaded' && !nfts.length)
 		return (
-			<Container>
-				<Stack
-					direction='row'
-					alignItems='center'
-					justifyContent='space-between'
-					mb={5}
-				>
-					<Typography variant='h4'>My NFTs</Typography>
-				</Stack>
-				<Grid
-					container
-					sx={{
-						height: 'calc(60vh - 64px)',
-						justifyContent: 'center',
-						alignItems: 'center'
-					}}
-				>
-					<Typography variant='h6'>No items in the marketplace</Typography>
-				</Grid>
-			</Container>
+			<NoNFTs
+				title='My NFTs'
+				body='No items in the marketplace'
+			/>
 		);
 
 	return (
@@ -113,7 +93,7 @@ const MyNFTsView = () => {
 						>
 							<div>
 								<img
-									src={nft.image.replace('ipfs://', 'https://ipfs.io/ipfs/')}
+									src={nft.image}
 									alt={nft.name}
 									style={{
 										width: '100%',
@@ -148,14 +128,14 @@ const MyNFTsView = () => {
 								>
 									{nft.price} ETH
 								</Typography>
-                                
+
 								<Button
 									variant='contained'
 									onClick={() => listNFT(nft)}
 								>
 									List
 								</Button>
-                            </div>
+							</div>
 						</Card>
 					</Grid>
 				))}

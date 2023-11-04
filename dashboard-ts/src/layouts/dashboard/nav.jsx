@@ -93,14 +93,22 @@ export default function Nav({ openNav, onCloseNav }) {
 			)}
 		</Box>
 	);
-
+	const filteredNavConfig = navConfig.filter(item => {
+		if (sellerOrBuyer.isSeller) {
+			// If showCreateNft is true, include all items
+			return true;
+		} else {
+			// If showCreateNft is false, exclude items with titles 'create nft' and 'my listings'
+			return item.title !== 'create nft' && item.title !== 'my listings';
+		}
+	});
 	const renderMenu = (
 		<Stack
 			component='nav'
 			spacing={0.5}
 			sx={{ px: 2 }}
 		>
-			{navConfig.map(item => (
+			{filteredNavConfig.map(item => (
 				<NavItem
 					key={item.title}
 					item={item}

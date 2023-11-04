@@ -17,8 +17,6 @@ export async function NFTKoMintMaar(metaDataURL) {
 
 		const nftTx = await contract.mintNFT(window.ethereum.selectedAddress, metaDataURL);
 		await nftTx.wait();
-		// const totalTokens = await contract.methods.getTokenCount().call();
-		// console.log("total tokens",totalTokens)
 		console.log(nftTx);
 		const getAddr = await signer.getAddress();
 		console.log('NFT minted! address:', getAddr.toString());

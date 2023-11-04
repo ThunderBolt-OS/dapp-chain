@@ -29,6 +29,35 @@ const StyledSearchbar = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
+const searchables = [
+	{
+		name: 'People',
+		icon: 'eva:people-fill',
+		path: '/dashboard/people'
+	},
+	{
+		name: 'Documents',
+		icon: 'eva:file-text-fill',
+		path: '/dashboard/documents'
+	},
+	{
+		name: 'Discussions',
+		icon: 'eva:message-square-fill',
+		path: '/dashboard/discussions'
+	},
+	{
+		name: 'Communities',
+		icon: 'eva:share-fill'
+	},
+	{
+		name: 'Events',
+		icon: 'eva:calendar-fill'
+	},
+	{
+		name: 'Files',
+		icon: 'eva:briefcase-fill'
+	}
+]
 
 export default function Searchbar() {
 	const [open, setOpen] = useState(false);
@@ -83,4 +112,4 @@ export default function Searchbar() {
 			</div>
 		</ClickAwayListener>
 	);
-}
+};

@@ -49,7 +49,6 @@ const NFTFormFields = ({ loading, setLoading }) => {
 
 	const handleSubmit = async () => {
 		// Handle form submission logic here
-		console.log('Form submitted:', title, description, price);
 		console.log('Form present in context:', nftFormData);
 		// calling the generate ipfs url function
 		setLoading(true);
@@ -61,9 +60,9 @@ const NFTFormFields = ({ loading, setLoading }) => {
 		);
 		await listNFTForSale(ifpsUrl, price, description);
 
-		console.log('ipfs url', ifpsUrl);
+		console.log('IPFS URL', ifpsUrl);
 		setLoading(false);
-		setShowConfetti(true); // Show confetti after minting is done
+		setShowConfetti(true); 
 		enqueueSnackbar('NFT Minted Successfully', {
 			variant: 'success',
 			autoHideDuration: 2000,

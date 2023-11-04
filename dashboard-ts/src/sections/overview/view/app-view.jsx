@@ -284,7 +284,7 @@ export default function AppView() {
 					lg={8}
 				>
 					<AppWebsiteVisits
-						title='Website Visits'
+						title='Block Difficulty'
 						subheader='(+43%) than last year'
 						chart={{
 							labels: [

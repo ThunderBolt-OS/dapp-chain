@@ -59,7 +59,7 @@ export const warning = {
 	main: '#FFAB00',
 	dark: '#B76E00',
 	darker: '#7A4100',
-	contrastText: grey[800]
+	contrastText: '#212B36'
 };
 
 export const error = {
