@@ -31,6 +31,15 @@ export default function Router() {
 			element: <SellerOrBuyer />
 		},
 		{
+			path: '/buyer-or-seller',
+			element: (
+				<Navigate
+					to='/seller-or-buyer'
+					replace
+				/>
+			)
+		},
+		{
 			element: (
 				<DashboardLayout>
 					<Suspense>

@@ -7,9 +7,12 @@ import { set } from 'lodash';
 import { NFTKoMintMaar } from 'src/utils/mintNFTFromIPFS';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { listNFTForSale } from 'src/utils/listNftForSale';
+import { useRouter } from 'src/routes/hooks';
+
 
 const NFTFormFields = ({ loading, setLoading }) => {
 	const theme = useTheme();
+	const route = useRouter();
 	const { enqueueSnackbar } = useSnackbar();
 	const { nftFormData, updateNftFormData } = useCreateNFT();
 	const [title, setTitle] = useState('');
@@ -71,6 +74,8 @@ const NFTFormFields = ({ loading, setLoading }) => {
 				horizontal: 'right'
 			}
 		});
+
+		route.push('/marketplace');
 	};
 
 	return (

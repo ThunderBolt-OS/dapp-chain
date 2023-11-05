@@ -1,1 +1,0 @@
-fragment(operation = "fragment", info = { "args": ["ipfs://bafyreiagneitglovmwlu44lbwl2cxbitt4e42dt5p26sqor4mykvrzldme/metadata.json"], "key": "mintNFT" }, code = UNSUPPORTED_OPERATION, version = 6.8.0)

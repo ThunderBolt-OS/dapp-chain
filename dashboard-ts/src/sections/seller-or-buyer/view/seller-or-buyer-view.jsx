@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Stack, Typography, Button } from '@mui/material';
+import { Box, Container, Stack, Typography, Button, Avatar } from '@mui/material';
 import Iconify from 'src/components/iconify';
 
 import { useRouter } from 'src/routes/hooks';
@@ -30,7 +30,7 @@ const MintNFTView = () => {
 		>
 			<Box>
 				<Typography
-					variant='h4'
+					variant='h3'
 					align='center'
 					sx={{
 						fontWeight: 'bold',
@@ -43,18 +43,37 @@ const MintNFTView = () => {
 					direction='row'
 					alignItems='center'
 					justifyContent='space-evenly'
+					spacing={2}
 				>
 					<Button
 						variant='contained'
 						color='inherit'
+						size='large'
 						onClick={handleOnClickBuyer}
+						sx={{ width: 150 }}
+						startIcon={
+							<Avatar
+								sx={{ width: 45, height: 45 }}
+								alt='Ethereum'
+								src='/assets/images/avatars/avatar_4.jpg'
+							/>
+						}
 					>
 						Buyer
 					</Button>
 					<Button
 						variant='contained'
 						color='inherit'
+						size='large'
 						onClick={handleOnClickSeller}
+						sx={{ width: 150 }}
+						startIcon={
+							<Avatar
+								sx={{ width: 45, height: 45 }}
+								alt='Buyer'
+								src='/assets/images/avatars/avatar_2.jpg'
+							/>
+						}
 					>
 						Seller
 					</Button>
