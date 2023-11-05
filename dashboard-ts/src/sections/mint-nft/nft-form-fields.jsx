@@ -9,7 +9,6 @@ import ConfettiExplosion from 'react-confetti-explosion';
 import { listNFTForSale } from 'src/utils/listNftForSale';
 import { useRouter } from 'src/routes/hooks';
 
-
 const NFTFormFields = ({ loading, setLoading }) => {
 	const theme = useTheme();
 	const route = useRouter();
@@ -65,7 +64,7 @@ const NFTFormFields = ({ loading, setLoading }) => {
 
 		console.log('IPFS URL', ifpsUrl);
 		setLoading(false);
-		setShowConfetti(true); 
+		setShowConfetti(true);
 		enqueueSnackbar('NFT Minted Successfully', {
 			variant: 'success',
 			autoHideDuration: 2000,

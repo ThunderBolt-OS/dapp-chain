@@ -39,7 +39,7 @@ const navConfig = [
 		title: 'my nfts',
 		path: '/my-nfts',
 		icon: icon('ic_cart')
-	},
+	}
 ];
 
 export default navConfig;

@@ -3,6 +3,7 @@ import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 
 import DashboardLayout from 'src/layouts/dashboard';
+import SuspenseLoader from 'src/components/suspence-loader';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const ConnectPage = lazy(() => import('src/pages/connect-wallet'));
@@ -28,7 +29,7 @@ export default function Router() {
 		},
 		{
 			path: '/seller-or-buyer',
-			element: <SellerOrBuyer />
+			element: <PrivateRoute element={<SellerOrBuyer />} />
 		},
 		{
 			path: '/buyer-or-seller',
@@ -41,15 +42,19 @@ export default function Router() {
 		},
 		{
 			element: (
-				<DashboardLayout>
-					<Suspense>
-						<Outlet />
-					</Suspense>
-				</DashboardLayout>
+				<PrivateRoute
+					element={
+						<DashboardLayout>
+							<Suspense fallback={<SuspenseLoader />}>
+								<Outlet />
+							</Suspense>
+						</DashboardLayout>
+					}
+				/>
 			),
 			children: [
-				{ element: <PrivateRoute element={<IndexPage />} />, index: true },
-				{ path: 'user', element: <PrivateRoute element={<UserPage />} /> },
+				{ element: <IndexPage />, index: true },
+				{ path: 'user', element: <UserPage /> },
 				{ path: 'products', element: <ProductsPage /> },
 				{
 					path: 'product-detail/:hash',
@@ -74,7 +79,6 @@ export default function Router() {
 				}
 			]
 		},
-
 		{
 			path: 'login',
 			element: <LoginPage />

@@ -1,1 +1,1 @@
-export {default as NoNFTs} from './no-nfts'
+export { default as NoNFTs } from './no-nfts';

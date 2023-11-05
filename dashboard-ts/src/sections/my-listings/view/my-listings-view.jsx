@@ -11,12 +11,12 @@ import NFTMarketplace from 'src/artifacts/contracts/NFTMarketplace.sol/NFTMarket
 
 const MyListingsView = () => {
 	const [nfts, setNfts] = useState([]);
-    const [loadingState, setLoadingState] = useState('not-loaded');
-    
+	const [loadingState, setLoadingState] = useState('not-loaded');
+
 	useEffect(() => {
 		loadNFTs();
-    }, []);
-    
+	}, []);
+
 	async function loadNFTs() {
 		const provider = new ethers.BrowserProvider(window.ethereum);
 
@@ -43,9 +43,9 @@ const MyListingsView = () => {
 
 		setNfts(items);
 		setLoadingState('loaded');
-    };
+	}
 
-    if (loadingState === 'loaded' && !nfts.length)
+	if (loadingState === 'loaded' && !nfts.length)
 		return (
 			<NoNFTs
 				title='My Listings'
@@ -98,9 +98,8 @@ const MyListingsView = () => {
 									variant='h5'
 									sx={{ mt: 2 }}
 								>
-                                    {nft.name}
+									{nft.name}
 								</Typography>
-								
 							</div>
 							<div
 								style={{
@@ -116,8 +115,6 @@ const MyListingsView = () => {
 								>
 									{nft.price} ETH
 								</Typography>
-
-								
 							</div>
 						</Card>
 					</Grid>

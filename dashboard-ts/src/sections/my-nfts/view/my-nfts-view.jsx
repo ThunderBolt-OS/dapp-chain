@@ -12,15 +12,13 @@ import NFTMarketplace from 'src/artifacts/contracts/NFTMarketplace.sol/NFTMarket
 const MyNFTsView = () => {
 	const [nfts, setNfts] = useState([]);
 	const [loadingState, setLoadingState] = useState('not-loaded');
-    const router = useRouter();
-    
+	const router = useRouter();
+
 	useEffect(() => {
 		loadNFTs();
-    }, []);
+	}, []);
 
-    
 	async function loadNFTs() {
-
 		const provider = new ethers.BrowserProvider(window.ethereum);
 		const signer = await provider.getSigner();
 

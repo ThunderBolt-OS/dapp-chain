@@ -57,7 +57,7 @@ const searchables = [
 		name: 'Files',
 		icon: 'eva:briefcase-fill'
 	}
-]
+];
 
 export default function Searchbar() {
 	const [open, setOpen] = useState(false);
@@ -112,4 +112,4 @@ export default function Searchbar() {
 			</div>
 		</ClickAwayListener>
 	);
-};
+}

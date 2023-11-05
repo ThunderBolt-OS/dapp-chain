@@ -1,6 +1,5 @@
 import { CardContent, Box, Button, Link, Card, Stack, Typography, Chip, CardMedia, useTheme } from '@mui/material';
 
-
 // ----------------------------------------------------------------------
 
 export default function ProductCard({ price, name, image, buyNft }) {

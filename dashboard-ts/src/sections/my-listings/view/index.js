@@ -1,1 +1,1 @@
-export {default as MyListingsView} from './my-listings-view'
+export { default as MyListingsView } from './my-listings-view';
