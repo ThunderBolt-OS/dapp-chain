@@ -18,8 +18,8 @@ import { useSetUser } from 'src/contexts/SellerOrBuyerContext';
 // ----------------------------------------------------------------------
 
 export default function Nav({ openNav, onCloseNav }) {
-	const { metaMaskData, disconnectMetaMask } = useWallet();
-	const { accounts, isMetaMaskConnected } = metaMaskData;
+	const { wallet, disconnectMetaMask } = useWallet();
+	const { account, isMetaMaskConnected } = wallet;
 	const { sellerOrBuyer } = useSetUser();
 	const pathname = usePathname();
 
@@ -66,13 +66,13 @@ export default function Nav({ openNav, onCloseNav }) {
 			}}
 		>
 			<Avatar
-				src={generateAvatarURL(toString(accounts[0]))}
+				src={generateAvatarURL(toString(account))}
 				alt='photoURL'
 				sx={{ width: 37, height: 37, bgcolor: 'background.neutral' }}
 			/>
 			{isMetaMaskConnected ? (
 				<Box sx={{ ml: 2 }}>
-					<Typography variant='subtitle2'>{clipAddress(accounts[0])}</Typography>
+					<Typography variant='subtitle2'>{clipAddress(account)}</Typography>
 					<Typography
 						variant='body2'
 						sx={{ color: 'success.main' }}

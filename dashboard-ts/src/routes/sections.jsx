@@ -29,7 +29,7 @@ export default function Router() {
 		},
 		{
 			path: '/seller-or-buyer',
-			element: <PrivateRoute element={<SellerOrBuyer />} />
+			element: <SellerOrBuyer />
 		},
 		{
 			path: '/buyer-or-seller',

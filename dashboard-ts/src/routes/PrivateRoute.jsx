@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'src/routes/hooks';
 
 const PrivateRoute = ({ element }) => {
-	const { metaMaskData } = useWallet();
-	const { isMetaMaskConnected } = metaMaskData;
+	const { wallet } = useWallet();
+	const { isMetaMaskConnected } = wallet;
 	const router = useRouter();
 
 	useEffect(() => {

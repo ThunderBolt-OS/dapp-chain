@@ -24,8 +24,8 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
-	const { metaMaskData } = useWallet();
-	const { accounts } = metaMaskData;
+	const { wallet } = useWallet();
+	const { account } = wallet;
 
 	const [open, setOpen] = useState(null);
 
@@ -63,15 +63,15 @@ export default function AccountPopover() {
 				}}
 			>
 				<Avatar
-					src={generateAvatarURL(toString(accounts[0]))}
-					alt={account.displayName}
+					src={generateAvatarURL(toString(account))}
+					// alt={account.displayName}
 					sx={{
 						width: 36,
 						height: 36,
 						border: theme => `solid 2px ${theme.palette.background.default}`
 					}}
 				>
-					{account.displayName.charAt(0).toUpperCase()}
+					{/* {account.displayName.charAt(0).toUpperCase()} */}
 				</Avatar>
 			</IconButton>
 
@@ -91,12 +91,12 @@ export default function AccountPopover() {
 				}}
 			>
 				<Box sx={{ my: 1.5, px: 2 }}>
-					{/* {accounts[0]} */}
+					{/* {account} */}
 					<Typography
 						variant='subtitle2'
 						noWrap
 					>
-						{clipAddress(accounts[0])}
+						{clipAddress(account)}
 					</Typography>
 					<Typography
 						variant='body2'

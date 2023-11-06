@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, Card, Stack, Typography, Button } from '@mui/material';
 import { ethers, JsonRpcProvider, formatUnits, parseUnits } from 'ethers';
-import { useRouter } from 'src/routes/hooks';
-import axios from 'axios';
+// import axios from 'axios';
 
-import { convertIPFSUrl } from 'src/utils/convertIPFSUrl';
-import { NoNFTs } from 'src/components';
-import { MARKETPLACE_CONTRACT_ADDRESS } from 'src/constants';
-import NFTMarketplace from 'src/artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
+import { convertIPFSUrl } from '../../../../src/utils/convertIPFSUrl';
+import { NoNFTs } from '../../../../src/components';
+import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../../src/constants';
+import NFTMarketplace from '../../../../src/artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
 
 const MyListingsView = () => {
 	const [nfts, setNfts] = useState([]);

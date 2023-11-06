@@ -10,8 +10,8 @@ function ConnectButton() {
 	const { enqueueSnackbar } = useSnackbar();
 	const router = useRouter();
 
-	const { connectMetaMask, metaMaskData } = useWallet();
-	const { isMetaMaskConnected } = metaMaskData;
+	const { connectMetaMask, wallet } = useWallet();
+	const { isMetaMaskConnected } = wallet;
 
 	const connectWallet = () => {
 		connectMetaMask();
@@ -54,9 +54,9 @@ function ConnectButton() {
 
 export default function ConnectWalletView() {
 	const router = useRouter();
-	const { metaMaskData } = useWallet();
+	const { wallet } = useWallet();
 
-	const { isMetaMaskConnected } = metaMaskData;
+	const { isMetaMaskConnected } = wallet;
 
 	if (isMetaMaskConnected) router.push('/');
 
