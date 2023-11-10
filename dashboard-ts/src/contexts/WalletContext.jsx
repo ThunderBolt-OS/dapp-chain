@@ -24,45 +24,45 @@ export function WalletProvider({ children }) {
 		isMetaMaskConnected: false
 	});
 
-	// const connectMetaMask = async () => {
-	// 	try {
-	// 		if (window.ethereum) {
-	// 			await window.ethereum.request({ method: 'eth_requestAccounts' });
-	// 			const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-	// 			const account = accounts[0];
-	// 			const networkId = await window.ethereum.request({ method: 'net_version' });
-	// 			const chainId = window.ethereum.chainId;
-	// 			const balance = await window.ethereum.request({ method: 'eth_getBalance', params: [accounts[0]] });
-	// 			console.log('balance', balance);
-	// 			const isMetaMaskConnected = window.ethereum.isConnected();
-	// 			console.log('isMetaMaskConnected', isMetaMaskConnected);
+	const connectMetaMask = async () => {
+		try {
+			if (window.ethereum) {
+				await window.ethereum.request({ method: 'eth_requestAccounts' });
+				const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+				const account = accounts[0];
+				const networkId = await window.ethereum.request({ method: 'net_version' });
+				const chainId = window.ethereum.chainId;
+				const balance = await window.ethereum.request({ method: 'eth_getBalance', params: [accounts[0]] });
+				console.log('balance', balance);
+				const isMetaMaskConnected = window.ethereum.isConnected();
+				console.log('isMetaMaskConnected', isMetaMaskConnected);
 
-	// 			setMetaMaskData({
-	// 				networkId,
-	// 				chainId,
-	// 				account,
-	// 				balance,
-	// 				balance,
-	// 				isMetaMaskConnected
-	// 			});
+				setMetaMaskData({
+					networkId,
+					chainId,
+					account,
+					balance,
+					balance,
+					isMetaMaskConnected
+				});
 
-	// 			setWallet({
-	// 				networkId,
-	// 				chainId,
-	// 				account,
-	// 				balance,
-	// 				isMetaMaskConnected
-	// 			});
+				setWallet({
+					networkId,
+					chainId,
+					account,
+					balance,
+					isMetaMaskConnected
+				});
 
-	// 			console.log(wallet);
-	// 			console.log(metaMaskData);
-	// 		} else {
-	// 			alert('MetaMask is not installed. Please install MetaMask.');
-	// 		}
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-	// };
+				console.log(wallet);
+				console.log(metaMaskData);
+			} else {
+				alert('MetaMask is not installed. Please install MetaMask.');
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	const disconnectMetaMask = () => {
 		setAccount(null);
@@ -110,7 +110,7 @@ export function WalletProvider({ children }) {
 			value={{
 				account,
 				isConnected,
-				// connectMetaMask,
+				connectMetaMask,
 				disconnectMetaMask,
 				metaMaskData,
 				wallet
