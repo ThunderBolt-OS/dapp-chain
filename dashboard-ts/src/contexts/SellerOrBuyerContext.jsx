@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import { useLocalStorage } from 'src/hooks/use-local-storage';
 
 export const SellerOrBuyerContext = createContext({
 	sellerOrBuyer: {
@@ -8,7 +9,7 @@ export const SellerOrBuyerContext = createContext({
 });
 
 export function SellerOrBuyerContextProvider({ children }) {
-	const [sellerOrBuyer, setSellerOrBuyer] = useState({
+	const [sellerOrBuyer, setSellerOrBuyer] = useLocalStorage("sellerOrBuyer",{
 		sellerOrBuyer: {
 			isSeller: true
 		}
