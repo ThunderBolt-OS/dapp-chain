@@ -6,7 +6,7 @@ export default function ProductCard({ price, name, image, buyNft }) {
 	const theme = useTheme();
 	return (
 		<Card
-			sx={{ width: 300, height: '100%', cursor: 'pointer', boxShadow: 3 }}
+			sx={{ width: 300, height: '100%', cursor: 'pointer', boxShadow: 3, }}
 			// onClick={}
 		>
 			<CardMedia

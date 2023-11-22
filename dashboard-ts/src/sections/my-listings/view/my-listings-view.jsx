@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Card, Stack, Typography, Button } from '@mui/material';
-import { ethers, JsonRpcProvider, formatUnits, parseUnits } from 'ethers';
-// import axios from 'axios';
+import { Container, Grid, Card, Typography, useTheme, CardContent,CardMedia, Chip, Stack, CircularProgress, Box } from '@mui/material';
+import { ethers, formatUnits } from 'ethers';
+import axios from 'axios';
 
 import { convertIPFSUrl } from '../../../../src/utils/convertIPFSUrl';
 import { NoNFTs } from '../../../../src/components';
@@ -9,6 +9,7 @@ import { MARKETPLACE_CONTRACT_ADDRESS } from '../../../../src/constants';
 import NFTMarketplace from '../../../../src/artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
 
 const MyListingsView = () => {
+	const theme = useTheme();
 	const [nfts, setNfts] = useState([]);
 	const [loadingState, setLoadingState] = useState('not-loaded');
 
@@ -17,51 +18,68 @@ const MyListingsView = () => {
 	}, []);
 
 	async function loadNFTs() {
-		const provider = new ethers.BrowserProvider(window.ethereum);
+		try {
+			const provider = new ethers.BrowserProvider(window.ethereum);
+			const signer = await provider.getSigner();
+			const contract = new ethers.Contract(MARKETPLACE_CONTRACT_ADDRESS, NFTMarketplace.abi, signer);
+			const data = await contract.fetchItemsListed();
 
-		const signer = await provider.getSigner();
+			const items = await Promise.all(
+				data.map(async i => {
+					const tokenUri = await contract.tokenURI(i.tokenId);
+					const meta = await axios.get(convertIPFSUrl(tokenUri));
+					let price = formatUnits(i.price.toString(), 'ether');
+					let item = {
+						price,
+						tokenId: i.tokenId,
+						seller: i.seller,
+						owner: i.owner,
+						image: convertIPFSUrl(meta.data.image)
+					};
+					return item;
+				})
+			);
 
-		const contract = new ethers.Contract(MARKETPLACE_CONTRACT_ADDRESS, NFTMarketplace.abi, signer);
-		const data = await contract.fetchItemsListed();
-
-		const items = await Promise.all(
-			data.map(async i => {
-				const tokenUri = await contract.tokenURI(i.tokenId);
-				const meta = await axios.get(convertIPFSUrl(tokenUri));
-				let price = formatUnits(i.price.toString(), 'ether');
-				let item = {
-					price,
-					tokenId: i.tokenId,
-					seller: i.seller,
-					owner: i.owner,
-					image: convertIPFSUrl(meta.data.image)
-				};
-				return item;
-			})
-		);
-
-		setNfts(items);
-		setLoadingState('loaded');
+			setNfts(items);
+			setLoadingState('loaded');
+		} catch (error) {
+			console.error('Error loading NFTs:', error);
+			setLoadingState('error');
+		}
 	}
 
-	if (loadingState === 'loaded' && !nfts.length)
+	if (loadingState === 'loaded' && !nfts.length) {
 		return (
 			<NoNFTs
 				title='My Listings'
 				body='No items in the List'
 			/>
 		);
+	}
+
+	if (loadingState === 'not-loaded' || loadingState === 'loading') {
+		return (
+			<Container>
+				<Box
+					display='flex'
+					alignItems='center'
+					justifyContent='center'
+					height='80vh'
+				>
+					<CircularProgress />
+				</Box>
+			</Container>
+		);
+	}
 
 	return (
 		<Container>
-			<Stack
-				direction='row'
-				alignItems='center'
-				justifyContent='space-between'
-				mb={5}
+			<Typography
+				variant='h4'
+				mb={4}
 			>
-				<Typography variant='h4'>My Listings</Typography>
-			</Stack>
+				My Listings
+			</Typography>
 			<Grid
 				container
 				spacing={4}
@@ -76,45 +94,45 @@ const MyListingsView = () => {
 					>
 						<Card
 							sx={{
-								p: 2,
 								display: 'flex',
 								flexDirection: 'column',
-								justifyContent: 'space-between',
 								height: '100%'
 							}}
 						>
-							<div>
-								<img
-									src={nft.image}
-									alt={nft.name}
-									style={{
-										width: '100%',
-										height: '100%',
-										objectFit: 'cover'
-									}}
-								/>
-								<Typography
-									variant='h5'
-									sx={{ mt: 2 }}
+							<CardMedia
+								image={nft.image}
+								title={'This is your NFT ' + name}
+								sx={{ height: 150, objectFit: 'cover' }}
+							/>
+							<CardContent>
+								<Stack
+									direction='row'
+									alignItems='center'
+									spacing={1}
+									sx={{ justifyContent: 'flex-end' }}
 								>
-									{nft.name}
-								</Typography>
-							</div>
-							<div
-								style={{
-									display: 'flex',
-									justifyContent: 'space-between',
-									alignItems: 'center',
-									marginTop: 'auto'
-								}}
-							>
-								<Typography
-									variant='h5'
-									sx={{ mt: 2 }}
-								>
-									{nft.price} ETH
-								</Typography>
-							</div>
+									<Typography variant='subtitle1'>{nft.price}</Typography>
+									<Chip
+										icon={
+											<img
+												src='/assets/ethereum.svg'
+												alt='ETH'
+												width={18}
+												height={18}
+											/>
+										}
+										label='ETH'
+										size='small'
+										sx={{
+											marginRight: 1,
+											backgroundColor: theme.palette.grey[300],
+											display: 'flex',
+											alignItems: 'center',
+											justifyContent: 'center'
+										}}
+									/>
+								</Stack>
+							</CardContent>
 						</Card>
 					</Grid>
 				))}

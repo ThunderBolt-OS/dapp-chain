@@ -6,92 +6,130 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export default function TransactionDetailCard() {
+export default function TransactionDetailCard({ blockData }) {
 	const [isExpanded, setIsExpanded] = React.useState(false);
 
 	const handleExpandClick = () => {
 		setIsExpanded(!isExpanded);
 	};
 
+	const transactions = blockData?.result?.transactions || [];
+
+	const convertHexToReadable = hex => {
+		return parseInt(hex, 16).toString();
+	};
+
+	const formatTimestamp = timestamp => {
+		const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
+		return date.toLocaleString();
+	};
+
 	return (
-		<Card sx={{ width: '90%' }}>
+		<Card sx={{ width: '90%', margin: 'auto' }}>
 			<CardContent>
-				<Typography variant='h6'>Transaction Index</Typography>
+				<Typography variant='h6'>Transaction Details</Typography>
 				<Typography
 					variant='subtitle2'
 					color='textSecondary'
 				>
-					Timestamp
+					Timestamp: {formatTimestamp(convertHexToReadable(blockData?.result?.timestamp))}
+				</Typography>
+				<Typography
+					variant='subtitle2'
+					color='textSecondary'
+				>
+					Hash: {blockData?.result?.hash}
+				</Typography>
+				<Typography
+					variant='subtitle2'
+					color='textSecondary'
+				>
+					Parent Hash: {blockData?.result?.parentHash}
+				</Typography>
+				<Typography
+					variant='subtitle2'
+					color='textSecondary'
+				>
+					Nonce: {convertHexToReadable(blockData?.result?.nonce)}
+				</Typography>
+				<Typography
+					variant='subtitle2'
+					color='textSecondary'
+				>
+					Number: {convertHexToReadable(blockData?.result?.number)}
+				</Typography>
+				<Typography
+					variant='subtitle2'
+					color='textSecondary'
+				>
+					Gas Used: {convertHexToReadable(blockData?.result?.gasUsed)}
+				</Typography>
+				<Typography
+					variant='subtitle2'
+					color='textSecondary'
+				>
+					Size: {convertHexToReadable(blockData?.result?.size)}
 				</Typography>
 				<hr /> {/* Add a horizontal line to separate content */}
-				<Typography
-					variant='body2'
-					color='textSecondary'
-				>
-					HASH
-				</Typography>
-				<Typography variant='body1'>From</Typography>
-				<Typography
-					variant='body2'
-					color='textSecondary'
-				>
-					Sender's address Hash
-				</Typography>
-				<Typography
-					variant='body1'
-					sx={{ mt: 2 }}
-				>
-					To
-				</Typography>
-				<Typography
-					variant='body2'
-					color='textSecondary'
-				>
-					Receiver's address Hash
-				</Typography>
-				<Typography
-					variant='body2'
-					color='textSecondary'
-				>
-					Value:
-				</Typography>
-				<Typography variant='body1'>Sender's address Hash</Typography>
-				<hr /> {/* Add a horizontal line to separate content */}
-				{isExpanded && (
+				{transactions.length > 0 && (
 					<>
-						<Typography variant='body1'>From</Typography>
 						<Typography
-							variant='body2'
+							variant='subtitle2'
 							color='textSecondary'
 						>
-							Gas Price: 2345
+							Transactions:
 						</Typography>
-
-						<Typography
-							variant='body1'
-							sx={{ mt: 2 }}
+						<IconButton
+							aria-label='expand more'
+							onClick={handleExpandClick}
+							sx={{
+								marginLeft: 'auto',
+								transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+								transition: 'transform 0.2s'
+							}}
 						>
-							Value: 2345
-						</Typography>
-						<Typography
-							variant='body2'
-							color='textSecondary'
-						>
-							Input: 2345
-						</Typography>
+							<ExpandMoreIcon />
+						</IconButton>
+						{isExpanded && (
+							<div>
+								{transactions.map((transaction, index) => (
+									<div key={index}>
+										<Typography variant='body1'>From: {transaction.from}</Typography>
+										<Typography
+											variant='body2'
+											color='textSecondary'
+											sx={{ overflowWrap: 'break-word', wordBreak: 'break-all' }}
+										>
+											Gas Price: {convertHexToReadable(transaction.gasPrice)}
+										</Typography>
+										<Typography
+											variant='body1'
+											sx={{ overflowWrap: 'break-word', wordBreak: 'break-all' }}
+										>
+											Value: {convertHexToReadable(transaction.value)}
+										</Typography>
+										<Typography
+											variant='body2'
+											color='textSecondary'
+											sx={{ overflowWrap: 'break-word', wordBreak: 'break-all' }}
+										>
+											Input: {transaction.input}
+										</Typography>
+										<hr />
+									</div>
+								))}
+							</div>
+						)}
 					</>
 				)}
-				<IconButton
-					aria-label='expand more'
-					onClick={handleExpandClick}
-					sx={{
-						marginLeft: 'auto',
-						transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-						transition: 'transform 0.2s'
-					}}
-				>
-					<ExpandMoreIcon />
-				</IconButton>
+				{transactions.length === 0 && (
+					<Typography
+						variant='body2'
+						color='textSecondary'
+					>
+						No transactions happened.
+					</Typography>
+				)}
 			</CardContent>
 		</Card>
 	);

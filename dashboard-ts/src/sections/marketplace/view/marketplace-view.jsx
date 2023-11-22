@@ -92,9 +92,12 @@ const MarketplaceView = () => {
 					<Grid
 						item
 						key={i}
-						xs={12}
-						sm={6}
-						md={4}
+						xs
+						sm
+						md
+						sx={{
+							my: 0.4
+						}}
 					>
 						<ProductCard
 							price={nft.price}

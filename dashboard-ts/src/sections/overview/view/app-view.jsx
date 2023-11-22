@@ -17,6 +17,9 @@ import AppCurrentSubject from '../app-current-subject';
 import AppConversionRates from '../app-conversion-rates';
 import { useInterval } from 'src/hooks/use-interval';
 
+import { useWallet } from 'src/contexts/WalletContext';
+import { useLocalStorage } from 'src/hooks/use-local-storage';
+
 // ----------------------------------------------------------------------
 
 export default function AppView() {
@@ -24,12 +27,16 @@ export default function AppView() {
 
 	// state for number of peers
 	const [noOfPeers, setNoOfPeers] = useState(null);
+	const[noOfPeersInLocalStorage, setNoOfPeersInLocalStorage] = useLocalStorage('noOfPeers', 0);
 
 	// state for number of blocks
 	const [noOfBlocks, setNoOfBlocks] = useState(null);
 
 	// state of estimate gas fees
 	const [estimateGasFees, setEstimateGasFees] = useState(null);
+
+	// state of chain id
+	const [chainId, setChainId] = useState(null);
 
 	// state of system status
 	const [systemStatus, setSystemStatus] = useState(null);
@@ -52,8 +59,9 @@ export default function AppView() {
 		})
 			.then(response => response.json())
 			.then(data => {
-				const value = parseInt(data.result, 16);
+				let value = parseInt(data.result, 16);
 				setNoOfPeers(value);
+				setNoOfPeersInLocalStorage(value);
 			})
 			.catch(error => {
 				console.log(error);
@@ -89,16 +97,14 @@ export default function AppView() {
 			},
 			body: JSON.stringify({
 				jsonrpc: '2.0',
-				method: 'eth_estimateGas',
+				method: 'eth_chainId',
 				params: [],
 				id: 1
 			})
 		})
 			.then(response => response.json())
 			.then(data => {
-				setEstimateGasFees(data.result);
-				console.log('this is estimate gas fees');
-				console.log(data.result);
+				setChainId(data.result);
 			})
 			.catch(error => {
 				console.log(error);
@@ -161,7 +167,7 @@ export default function AppView() {
 						<>
 							<AppWidgetSummary
 								title='No. of Peers'
-								total={noOfPeers}
+								total={parseInt(noOfPeers, 16)}
 								color='success'
 								icon={
 									<img
@@ -194,7 +200,7 @@ export default function AppView() {
 						<>
 							<AppWidgetSummary
 								title='No. of Blocks'
-								total={noOfBlocks}
+								total={parseInt(noOfBlocks, 16)}
 								color='info'
 								icon={
 									<img
@@ -212,7 +218,7 @@ export default function AppView() {
 					sm={6}
 					md={3}
 				>
-					{estimateGasFees === null ? (
+					{!chainId ? (
 						<>
 							<Skeleton
 								variant='rectangular'
@@ -226,8 +232,8 @@ export default function AppView() {
 					) : (
 						<>
 							<AppWidgetSummary
-								title='Estimated Gas Fees'
-								total={estimateGasFees}
+								title='Chain ID'
+								total={parseInt(chainId, 16)}
 								color='warning'
 								icon={
 									<img
@@ -259,13 +265,19 @@ export default function AppView() {
 					) : (
 						<>
 							<AppWidgetSummary
-								title='System Status'
+								title='Sys Status'
 								total={!systemStatus ? 'Synced' : 'Not Synced'}
 								color={!systemStatus ? 'success' : 'error'}
 								sx={{
 									backgroundColor: !systemStatus
 										? theme.palette.success.lighter
-										: theme.palette.error.lighter
+										: theme.palette.error.lighter,
+									borderColor: !systemStatus
+										? theme.palette.success.light
+										: theme.palette.error.light,
+									borderWidth: '1px',
+									borderStyle: 'dashed',
+									
 								}}
 								icon={
 									<img

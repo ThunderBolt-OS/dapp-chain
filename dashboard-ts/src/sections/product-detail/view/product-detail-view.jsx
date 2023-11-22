@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Container, Grid, Typography, Stack, Card, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import {
+	Box,
+	Container,
+	Grid,
+	Typography,
+	Paper,
+	Stack,
+	Card,
+	Table,
+	TableBody,
+	TableRow,
+	TableCell,
+	CardContent
+} from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { JSON_RPC_URL } from 'src/constants';
 import TransactionDetailCard from '../transaction-detail-card';
@@ -8,6 +21,7 @@ const ProductDetailView = () => {
 	const { hash } = useParams();
 	const [blockData, setBlockData] = useState({});
 	const [transactionData, setTransactionData] = useState({});
+	const [transactionsReceipt, setTransactionsReceipt] = useState({});
 
 	useEffect(() => {
 		const jsonRpcUrl = JSON_RPC_URL;
@@ -46,81 +60,75 @@ const ProductDetailView = () => {
 			</Stack>
 			<Grid
 				container
-				spacing={3}
+				// spacing={1}
+				sx={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}
 			>
 				{blockData.result ? (
 					<>
 						<Grid
 							item
-							xs={12}
-							md={6}
-							sm={6}
 							sx={{
 								justifyContent: 'flex-end'
 							}}
 						>
-							<Typography variant='h5'>Block Details</Typography>
-							<Table>
-								<TableBody>
-									<TableRow>
-										<TableCell>Block Hash</TableCell>
-										<TableCell>{blockData.result.hash}</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell>Block Parent Hash</TableCell>
-										<TableCell>{blockData.result.parentHash}</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell>Time</TableCell>
-										<TableCell>
-											{new Date(parseInt(blockData.result.timestamp, 16)).toString()}
-										</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell>Nonce</TableCell>
-										<TableCell>{blockData.result.nonce}</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell>Difficulty</TableCell>
-										<TableCell>{parseInt(blockData.result.difficulty, 16)}</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell>Gas Limit</TableCell>
-										<TableCell>{parseInt(blockData.result.gasLimit, 16)}</TableCell>
-									</TableRow>
-									<TableRow>
-										<TableCell>Total Difficulty</TableCell>
-										<TableCell>{parseInt(blockData.result.totalDifficulty, 16)}</TableCell>
-									</TableRow>
-								</TableBody>
-							</Table>
+							<Card sx={{ width: '100%' }}>
+								<CardContent>
+									<Typography variant='h5'>Block Details</Typography>
+									<Table>
+										<TableBody>
+											<TableRow>
+												<TableCell>Block Hash</TableCell>
+												<TableCell>{blockData.result.hash}</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell>Block Parent Hash</TableCell>
+												<TableCell>{blockData.result.parentHash}</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell>Time</TableCell>
+												<TableCell>
+													{new Date(
+														parseInt(blockData.result.timestamp, 16) * 1000
+													).toLocaleString()}
+												</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell>Nonce</TableCell>
+												<TableCell>{blockData.result.nonce}</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell>Difficulty</TableCell>
+												<TableCell>{parseInt(blockData.result.difficulty, 16)}</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell>Gas Limit</TableCell>
+												<TableCell>{parseInt(blockData.result.gasLimit, 16)}</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell>Total Difficulty</TableCell>
+												<TableCell>{parseInt(blockData.result.totalDifficulty, 16)}</TableCell>
+											</TableRow>
+										</TableBody>
+									</Table>
+								</CardContent>
+							</Card>
 						</Grid>
 					</>
 				) : (
 					<></>
 				)}
-				{JSON.stringify(blockData)}
-				{blockData.result.transaction ? (
+				{/* {JSON.stringify(blockData)} */}
+				{blockData.result ? (
 					<>
-						<Grid
-							item
-							xs={12}
-							md={6}
-							sm={6}
-						>
-							<Typography
-								variant='h5'
-								align='end'
-							>
-								Transaction Details
-							</Typography>
+						<Grid item>
 							<Box
 								sx={{
 									display: 'flex',
-									justifyContent: 'flex-end'
+									justifyContent: 'flex-end',
+									mt: 2
 								}}
 							>
-								<TransactionDetailCard />
+								<TransactionDetailCard blockData={blockData} />
 							</Box>
 						</Grid>
 					</>
