@@ -21,7 +21,7 @@ export function WalletProvider({ children }) {
 		chainId: null,
 		account: null,
 		balance: null,
-		isMetaMaskConnected: false
+		isMetaMaskConnected: null
 	});
 
 	const connectMetaMask = async () => {
@@ -31,10 +31,10 @@ export function WalletProvider({ children }) {
 				const accounts = await window.ethereum.request({ method: 'eth_accounts' });
 				const account = accounts[0];
 				const networkId = await window.ethereum.request({ method: 'net_version' });
-				const chainId = window.ethereum.chainId;
+				const chainId = networkId;
 				const balance = await window.ethereum.request({ method: 'eth_getBalance', params: [accounts[0]] });
 				console.log('balance', balance);
-				const isMetaMaskConnected = window.ethereum.isConnected();
+				const isMetaMaskConnected = accounts[0] ? true : false;
 				console.log('isMetaMaskConnected', isMetaMaskConnected);
 
 				setMetaMaskData({
@@ -54,8 +54,9 @@ export function WalletProvider({ children }) {
 					isMetaMaskConnected
 				});
 
-				console.log(wallet);
 				console.log(metaMaskData);
+
+				console.log('this is danger', {networkId, chainId, account, balance, isMetaMaskConnected});
 			} else {
 				alert('MetaMask is not installed. Please install MetaMask.');
 			}
