@@ -27,7 +27,7 @@ export default function AppView() {
 
 	// state for number of peers
 	const [noOfPeers, setNoOfPeers] = useState(null);
-	const[noOfPeersInLocalStorage, setNoOfPeersInLocalStorage] = useLocalStorage('noOfPeers', 0);
+	const [noOfPeersInLocalStorage, setNoOfPeersInLocalStorage] = useLocalStorage('noOfPeers', 0);
 
 	// state for number of blocks
 	const [noOfBlocks, setNoOfBlocks] = useState(null);
@@ -40,6 +40,10 @@ export default function AppView() {
 
 	// state of system status
 	const [systemStatus, setSystemStatus] = useState(null);
+
+	// state for storing block difficulty by block number
+	const [blockDifficulty, setBlockDifficulty] = useState(null);
+	const [blockDifficultyArr, setBlockDifficultyArr] = useState([]);
 
 	useInterval(() => {
 		const jsonRpcUrl = JSON_RPC_URL;
@@ -60,6 +64,7 @@ export default function AppView() {
 			.then(response => response.json())
 			.then(data => {
 				let value = parseInt(data.result, 16);
+				// value = value + 1;
 				setNoOfPeers(value);
 				setNoOfPeersInLocalStorage(value);
 			})
@@ -126,8 +131,28 @@ export default function AppView() {
 			.then(response => response.json())
 			.then(data => {
 				setSystemStatus(data.result);
+			})
+			.catch(error => {
+				console.log(error);
+			});
 
-				console.log('system status', data.result);
+		// fetch for fetching block difficulty by block number
+		fetch(jsonRpcUrl, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				jsonrpc: '2.0',
+				method: 'eth_getBlockByNumber',
+				params: [noOfBlocks, true],
+				id: 1
+			})
+		})
+			.then(response => response.json())
+			.then(data => {
+				setBlockDifficulty(data.result.difficulty);
+				setBlockDifficultyArr(prevArr => [...prevArr, parseInt(data.result.difficulty, 16)]);
 			})
 			.catch(error => {
 				console.log(error);
@@ -276,8 +301,7 @@ export default function AppView() {
 										? theme.palette.success.light
 										: theme.palette.error.light,
 									borderWidth: '1px',
-									borderStyle: 'dashed',
-									
+									borderStyle: 'dashed'
 								}}
 								icon={
 									<img
@@ -297,39 +321,21 @@ export default function AppView() {
 				>
 					<AppWebsiteVisits
 						title='Block Difficulty'
-						subheader='(+43%) than last year'
+						subheader='Each block difficulty from past 1 second'
 						chart={{
-							labels: [
-								'01/01/2003',
-								'02/01/2003',
-								'03/01/2003',
-								'04/01/2003',
-								'05/01/2003',
-								'06/01/2003',
-								'07/01/2003',
-								'08/01/2003',
-								'09/01/2003',
-								'10/01/2003',
-								'11/01/2003'
-							],
+							labels: blockDifficultyArr,
 							series: [
 								{
-									name: 'Team A',
+									name: 'Bar',
 									type: 'column',
 									fill: 'solid',
-									data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
+									data: blockDifficultyArr
 								},
 								{
-									name: 'Team B',
+									name: 'Line',
 									type: 'area',
 									fill: 'gradient',
-									data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
-								},
-								{
-									name: 'Team C',
-									type: 'line',
-									fill: 'solid',
-									data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]
+									data: blockDifficultyArr
 								}
 							]
 						}}
@@ -364,7 +370,7 @@ export default function AppView() {
 						subheader='(+43%) than last year'
 						chart={{
 							series: [
-								{ label: 'Italy', value: 400 },
+								{ label: 'Italy', value: 400 },	
 								{ label: 'Japan', value: 430 },
 								{ label: 'China', value: 448 },
 								{ label: 'Canada', value: 470 },
