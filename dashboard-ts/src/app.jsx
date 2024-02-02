@@ -13,6 +13,7 @@ import { SnackbarProvider } from 'notistack';
 // importing context providers
 import { CreateNFTDataContextProvider } from 'src/contexts/CreateNFTDataContext';
 import { SellerOrBuyerContextProvider } from './contexts/SellerOrBuyerContext';
+import { CPUTempContextProvider } from './contexts/CPUTempContext';
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +26,9 @@ export default function App() {
 				<WalletProvider>
 					<SellerOrBuyerContextProvider>
 						<CreateNFTDataContextProvider>
-							<Router />
+							<CPUTempContextProvider>
+								<Router />
+							</CPUTempContextProvider>
 						</CreateNFTDataContextProvider>
 					</SellerOrBuyerContextProvider>
 				</WalletProvider>

@@ -6,8 +6,9 @@ import DashboardLayout from 'src/layouts/dashboard';
 import SuspenseLoader from 'src/components/suspence-loader';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
-export const ConnectPage = lazy(() => import('src/pages/connect-wallet'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
+export const ConnectPage = lazy(() => import('src/pages/connect-wallet'));
+export const CpuMetrics = lazy(() => import('src/pages/cpu-metrics'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const MintNFT = lazy(() => import('src/pages/mint-nft'));
 export const Marketplace = lazy(() => import('src/pages/marketplace'));
@@ -19,7 +20,7 @@ export const ProductsPage = lazy(() => import('src/pages/products'));
 export const ProductDetailPage = lazy(() => import('src/pages/product-detail'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
-// ----------------------------------------------------------------------
+// ------------------------------------------------------------------------------
 
 export default function Router() {
 	const routes = useRoutes([
@@ -76,7 +77,11 @@ export default function Router() {
 				{
 					path: 'my-listings',
 					element: <MyListings />
-				}
+				},
+				{
+					path: 'cpu-metrics',
+					element: <CpuMetrics />
+				},
 			]
 		},
 		{

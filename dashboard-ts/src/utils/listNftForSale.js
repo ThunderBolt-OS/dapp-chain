@@ -7,6 +7,8 @@ import { MARKETPLACE_CONTRACT_ADDRESS } from 'src/constants';
 // const marketplaceAddress = "0xED7c84E25Ef97B4561A1273eC9676b441E2543B0";
 import NFTMarketplace from 'src/artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
 
+
+
 export async function listNFTForSale(ifpsUrl, price, description) {
 	const provider = new ethers.BrowserProvider(window.ethereum);
 	// const provider = new ethers.JsonRpcProvider(JSON_RPC_URL, { chainId: 100});

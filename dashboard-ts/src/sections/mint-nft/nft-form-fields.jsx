@@ -60,14 +60,16 @@ const NFTFormFields = ({ loading, setLoading }) => {
 			nftFormData.imageFile,
 			'testImage'
 		);
+
 		await listNFTForSale(ifpsUrl, price, description);
+		
 
 		console.log('IPFS URL', ifpsUrl);
 		setLoading(false);
 		setShowConfetti(true);
 		enqueueSnackbar('NFT Minted Successfully', {
 			variant: 'success',
-			autoHideDuration: 2000,
+			autoHideDuration: 3000,
 			anchorOrigin: {
 				vertical: 'bottom',
 				horizontal: 'right'
