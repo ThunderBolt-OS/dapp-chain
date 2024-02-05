@@ -65,7 +65,36 @@ const MarketplaceView = () => {
 		const transaction = await contract.createMarketSale(nft.tokenId, {
 			value: price
 		});
-		await transaction.wait();
+		const receipt = await transaction.wait();
+		// GET api call to get the cpu temperature
+		const cpuTemp = null;
+		const ramUsage = null;
+		const cpuFanSpeed = null;
+
+		try {
+			const response = await axios.get('http://localhost:8000/cpu-metrics');
+			cpuTemp = response.data;
+			console.log('cpu temperature', response.data);
+		} catch (error) {
+			console.error('error', error);
+		}
+
+		// POST api call to send the transaction and the cpu temperature
+		data = {
+			receipt: receipt,
+			cpu_temperature: cpuTemp,
+			transaction_type: 'buyNft',
+			ram_usage: ramUsage,
+			cpu_fan_speed: cpuFanSpeed
+		};
+
+		try {
+			const response = await axios.post('http://localhost:8000/create-cpu-temperature-transaction/', data);
+			console.log('response', response);
+		} catch (error) {
+			console.error('error', error);
+		}
+
 		loadNFTs();
 	}
 

@@ -1,4 +1,5 @@
 import { ethers, parseUnits } from 'ethers';
+import axios from 'axios';
 import { JSON_RPC_URL } from 'src/constants';
 // const marketplaceAddress = "0xa5Fc06987A507f41768D5153D9E1Afd9681c29E1";
 
@@ -21,6 +22,36 @@ export async function listNFTForSale(ifpsUrl, price, description) {
 	listingPrice = listingPrice.toString();
 	let transaction = await contract.createToken(ifpsUrl, price, { value: listingPrice });
 	const receipt = await transaction.wait();
+
+	// GET api call to get the cpu temperature
+	const cpuTemp = null;
+	const ramUsage = null;
+	const cpuFanSpeed = null;
+
+	try {
+		const response = await axios.get('http://localhost:8000/cpu-metrics');
+		cpuTemp = response.data;
+		console.log('cpu temperature', response.data);
+	} catch (error) {
+		console.error('error', error);
+	}
+
+	// POST api call to send the transaction and the cpu temperature
+	data = {
+		receipt: receipt,
+		cpu_temperature: cpuTemp,
+		transaction_type: 'mint',
+		ram_usage: ramUsage,
+		cpu_fan_speed: cpuFanSpeed
+	}
+
+	try {
+		const response = await axios.post('http://localhost:8000/create-cpu-temperature-transaction/', data);
+		console.log('response', response);
+	} catch (error) {
+		console.error('error', error);
+	}
+
 	// kundali mili
 	console.log('receipt', receipt);
 	console.log('string receipt', JSON.stringify(receipt));
