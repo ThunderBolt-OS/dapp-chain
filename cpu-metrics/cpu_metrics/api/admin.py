@@ -3,4 +3,4 @@ from .models import CPUTemperatureTransaction
 
 # Register your models here.
 
-admin.register(CPUTemperatureTransaction)
+admin.site.register(CPUTemperatureTransaction)

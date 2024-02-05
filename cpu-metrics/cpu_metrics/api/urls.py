@@ -24,5 +24,6 @@ urlpatterns = [
 
     # api
     path('hello-world/', hello_world, name='hello_world'),
-    path('cpu-metrics/', cpu_metrics, name='cpu_metrics')
+    path('cpu-metrics/', cpu_metrics, name='cpu_metrics'),
+    path('create-cpu-temperature-transaction/', create_cpu_temperature_transaction, name='create_cpu_temperature_transaction'),
 ]

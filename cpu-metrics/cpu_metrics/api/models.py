@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class CPUTemperatureTransaction:
+class CPUTemperatureTransaction(models.Model):
     receipt = models.CharField(max_length=100000, default=None)
     cpu_temperature = models.FloatField(default=None)
     created_at = models.DateTimeField(auto_now_add=True)
