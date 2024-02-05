@@ -23,5 +23,6 @@ urlpatterns = [
     path("docs/", get_schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 
     # api
-    path('hello-world/', hello_world, name='hello_world')
+    path('hello-world/', hello_world, name='hello_world'),
+    path('cpu-metrics/', cpu_metrics, name='cpu_metrics')
 ]
