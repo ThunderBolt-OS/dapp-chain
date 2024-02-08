@@ -21,6 +21,11 @@ const navConfig = [
 		icon: icon('ic_cart')
 	},
 	{
+		title: 'cpu metrics',
+		path: '/cpu-metrics',
+		icon: icon('ic_analytics')
+	},
+	{
 		title: 'create nft',
 		path: '/create-nft',
 		icon: icon('ic_user')

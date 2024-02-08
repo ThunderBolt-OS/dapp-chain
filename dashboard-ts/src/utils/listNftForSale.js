@@ -24,32 +24,31 @@ export async function listNFTForSale(ifpsUrl, price, description) {
 	const receipt = await transaction.wait();
 
 	// GET api call to get the cpu temperature
-	const cpuTemp = null;
-	const ramUsage = null;
-	const cpuFanSpeed = null;
+	let cpuTemp = null;
+	let ramUsage = null;
+	let cpuFanSpeed = null;
 
 	try {
 		const response = await axios.get('http://localhost:8000/cpu-metrics');
 		cpuTemp = response.data;
 		console.log('cpu temperature', response.data);
 	} catch (error) {
-		console.error('error', error);
+		console.error('error in getting cpu metric', error);
 	}
 
 	// POST api call to send the transaction and the cpu temperature
-	data = {
-		receipt: receipt,
-		cpu_temperature: cpuTemp,
-		transaction_type: 'mint',
-		ram_usage: ramUsage,
-		cpu_fan_speed: cpuFanSpeed
+	let data = {
+		receipt: JSON.stringify(receipt),
+		transaction_type: 'Mint',
+		...cpuTemp
 	}
+	console.log("this is data", data)
 
 	try {
 		const response = await axios.post('http://localhost:8000/create-cpu-temperature-transaction/', data);
 		console.log('response', response);
 	} catch (error) {
-		console.error('error', error);
+		console.error('error in posting txn', error);
 	}
 
 	// kundali mili

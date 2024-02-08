@@ -47,3 +47,18 @@ def create_cpu_temperature_transaction(request: Request) -> Response:
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# ---------------------------------------------------------------------------------------------
+
+class CPUTemperatureTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CPUTemperatureTransaction
+        fields = '__all__'
+
+@api_view(["GET"])
+def get_recent_transactions(request: Request) -> Response:
+    # get the most recent transaction ie the last transaction
+    recent_transactions = CPUTemperatureTransaction.objects.all().order_by('-id')  
+    # serialize the data
+    serializer = CPUTemperatureTransactionSerializer(recent_transactions, many=True)
+    return Response(serializer.data)

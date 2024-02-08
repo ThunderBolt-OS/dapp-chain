@@ -4,6 +4,8 @@ import { useCPUTemp } from 'src/contexts/CPUTempContext';
 
 
 const transactionEventEmitter = new EventEmitter();
+const channel = new BroadcastChannel('transaction');
+
 
 export const emitTransaction = async (type, data) => {
     const { cpuTemp, setCpuTemp } = useCPUTemp();

@@ -1,5 +1,6 @@
 // college mein sari testing hone vale constants
 export const JSON_RPC_URL = 'http://10.0.20.8:20002';
+export const BACKEND_API_URL = 'http://localhost:8000/';
 export const MARKETPLACE_CONTRACT_ADDRESS='0xa5Fc06987A507f41768D5153D9E1Afd9681c29E1';
 
 // ghar par sari testing hone vale constants

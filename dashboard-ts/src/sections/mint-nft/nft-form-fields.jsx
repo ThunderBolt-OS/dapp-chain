@@ -63,6 +63,7 @@ const NFTFormFields = ({ loading, setLoading }) => {
 
 		await listNFTForSale(ifpsUrl, price, description);
 		
+		
 
 		console.log('IPFS URL', ifpsUrl);
 		setLoading(false);

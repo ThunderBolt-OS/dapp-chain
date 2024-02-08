@@ -67,9 +67,9 @@ const MarketplaceView = () => {
 		});
 		const receipt = await transaction.wait();
 		// GET api call to get the cpu temperature
-		const cpuTemp = null;
-		const ramUsage = null;
-		const cpuFanSpeed = null;
+		let cpuTemp = null;
+		let ramUsage = null;
+		let cpuFanSpeed = null;
 
 		try {
 			const response = await axios.get('http://localhost:8000/cpu-metrics');
@@ -83,7 +83,7 @@ const MarketplaceView = () => {
 		data = {
 			receipt: receipt,
 			cpu_temperature: cpuTemp,
-			transaction_type: 'buyNft',
+			transaction_type: 'Buy NFT',
 			ram_usage: ramUsage,
 			cpu_fan_speed: cpuFanSpeed
 		};

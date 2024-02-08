@@ -20,6 +20,10 @@ def get_cpu_temperature():
         if temperature_lines:
             temperature_str = temperature_lines[0].split()[2]
             return float(temperature_str[:-2])  # Extract numerical value
+        # cpu_temperature = psutil.cpu_freq()[0]
+        
+        if cpu_temperature:
+            return cpu_temperature
         else:
             return None
     except Exception as e:
