@@ -24,9 +24,25 @@ def cpu_metrics(request: Request) -> Response:
     except Exception as e:
         print(f"Error: {e}")
         cpu_temperature = None
+
+    try: 
+        ram_usage = psutil.virtual_memory().percent
+        print(f"RAM Usage: {ram_usage}%")
+    except Exception as e:
+        print(f"Error: {e}")
+        ram_usage = None
+    
+    try:
+        cpu_fan_speed = psutil.sensors_fans()['coretemp'][0]
+        print(f"CPU Fan Speed: {cpu_fan_speed} RPM")
+    except Exception as e:
+        print(f"Error: {e}")
+        cpu_fan_speed = None
     
     json_response = {
-        "cpu_temperature": cpu_temperature
+        "cpu_temperature": cpu_temperature,
+        "ram_usage": ram_usage,
+        "cpu_fan_speed": cpu_fan_speed
     }
 
     return Response(json_response)

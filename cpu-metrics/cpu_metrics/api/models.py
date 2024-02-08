@@ -7,8 +7,8 @@ class CPUTemperatureTransaction(models.Model):
     cpu_temperature = models.FloatField(default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     transaction_type = models.CharField(max_length=1000, default=None)
-    ram_usage = models.FloatField()
-    cpu_fan_speed = models.FloatField()
+    ram_usage = models.FloatField(null=True)
+    cpu_fan_speed = models.FloatField(null=True)
 
     class Meta:
         db_table = 'cpu_temperature_transaction'
