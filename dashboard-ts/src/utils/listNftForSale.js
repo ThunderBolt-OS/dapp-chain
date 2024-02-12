@@ -1,6 +1,7 @@
 import { ethers, parseUnits } from 'ethers';
 import axios from 'axios';
 import { JSON_RPC_URL } from 'src/constants';
+import { useChainDetails } from 'src/contexts/ChainDetailsContext';
 // const marketplaceAddress = "0xa5Fc06987A507f41768D5153D9E1Afd9681c29E1";
 
 // bolt chain
@@ -10,7 +11,7 @@ import NFTMarketplace from 'src/artifacts/contracts/NFTMarketplace.sol/NFTMarket
 
 
 
-export async function listNFTForSale(ifpsUrl, price, description) {
+export async function listNFTForSale(ifpsUrl, price, description, chainDetails) {
 	const provider = new ethers.BrowserProvider(window.ethereum);
 	// const provider = new ethers.JsonRpcProvider(JSON_RPC_URL, { chainId: 100});
 	const signer = await provider.getSigner();
@@ -25,8 +26,6 @@ export async function listNFTForSale(ifpsUrl, price, description) {
 
 	// GET api call to get the cpu temperature
 	let cpuTemp = null;
-	let ramUsage = null;
-	let cpuFanSpeed = null;
 
 	try {
 		const response = await axios.get('http://localhost:8000/cpu-metrics');
@@ -37,16 +36,19 @@ export async function listNFTForSale(ifpsUrl, price, description) {
 	}
 
 	// POST api call to send the transaction and the cpu temperature
+	console.log('chain details inside mint nft func', chainDetails)
 	let data = {
 		receipt: JSON.stringify(receipt),
 		transaction_type: 'Mint',
+		block_difficulty: chainDetails.blockDifficulty,
+		created_at: new Date(),
 		...cpuTemp
-	}
-	console.log("this is data", data)
+	};
+	console.log('this is data', data);
 
 	try {
 		const response = await axios.post('http://localhost:8000/create-cpu-temperature-transaction/', data);
-		console.log('response', response);
+		console.log('POST response', response);
 	} catch (error) {
 		console.error('error in posting txn', error);
 	}

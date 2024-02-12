@@ -20,6 +20,8 @@ import { useInterval } from 'src/hooks/use-interval';
 import { useWallet } from 'src/contexts/WalletContext';
 import { useLocalStorage } from 'src/hooks/use-local-storage';
 
+import { useChainDetails } from 'src/contexts/ChainDetailsContext';
+
 // ----------------------------------------------------------------------
 
 export default function AppView() {
@@ -44,6 +46,8 @@ export default function AppView() {
 	// state for storing block difficulty by block number
 	const [blockDifficulty, setBlockDifficulty] = useState(null);
 	const [blockDifficultyArr, setBlockDifficultyArr] = useState([]);
+
+	const {updateChainDetails, chainDetails} = useChainDetails();
 
 	useInterval(() => {
 		const jsonRpcUrl = JSON_RPC_URL;
@@ -87,6 +91,9 @@ export default function AppView() {
 		})
 			.then(response => response.json())
 			.then(data => {
+				updateChainDetails({
+					blockNumber: parseInt(data.result, 16)
+				})
 				setNoOfBlocks(data.result);
 			})
 			.catch(error => {
@@ -151,6 +158,10 @@ export default function AppView() {
 		})
 			.then(response => response.json())
 			.then(data => {
+				updateChainDetails({
+					blockDifficulty: parseInt(data.result.difficulty, 16)
+				})
+				console.log('chaindeatils context', chainDetails);
 				setBlockDifficulty(data.result.difficulty);
 				setBlockDifficultyArr(prevArr => [...prevArr, parseInt(data.result.difficulty, 16)]);
 			})
@@ -370,7 +381,7 @@ export default function AppView() {
 						subheader='(+43%) than last year'
 						chart={{
 							series: [
-								{ label: 'Italy', value: 400 },	
+								{ label: 'Italy', value: 400 },
 								{ label: 'Japan', value: 430 },
 								{ label: 'China', value: 448 },
 								{ label: 'Canada', value: 470 },

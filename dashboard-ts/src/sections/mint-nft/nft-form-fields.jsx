@@ -3,16 +3,16 @@ import { Box, Button, Grid, Stack, TextField, InputAdornment, Typography, Chip, 
 import { useSnackbar } from 'notistack';
 import { useCreateNFT } from 'src/contexts/CreateNFTDataContext';
 import { storeAsset } from 'src/utils/generateIPFSUrl';
-import { set } from 'lodash';
-import { NFTKoMintMaar } from 'src/utils/mintNFTFromIPFS';
 import ConfettiExplosion from 'react-confetti-explosion';
 import { listNFTForSale } from 'src/utils/listNftForSale';
 import { useRouter } from 'src/routes/hooks';
+import { useChainDetails } from 'src/contexts/ChainDetailsContext';
 
 const NFTFormFields = ({ loading, setLoading }) => {
 	const theme = useTheme();
 	const route = useRouter();
 	const { enqueueSnackbar } = useSnackbar();
+	const { chainDetails } = useChainDetails();
 	const { nftFormData, updateNftFormData } = useCreateNFT();
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
@@ -61,9 +61,7 @@ const NFTFormFields = ({ loading, setLoading }) => {
 			'testImage'
 		);
 
-		await listNFTForSale(ifpsUrl, price, description);
-		
-		
+		await listNFTForSale(ifpsUrl, price, description, chainDetails);
 
 		console.log('IPFS URL', ifpsUrl);
 		setLoading(false);

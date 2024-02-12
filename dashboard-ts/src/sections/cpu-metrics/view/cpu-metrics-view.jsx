@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Box, Skeleton, useTheme, Container, Typography } from '@mui/material';
+import _ from 'lodash';
+import AppWebsiteVisits from '../../overview/app-website-visits';
 import AppWidgetSummary from '../../overview/app-widget-summary';
 import { BACKEND_API_URL } from 'src/constants';
 import { useInterval } from 'usehooks-ts';
@@ -8,6 +10,8 @@ const CpuMetricsView = () => {
 	const theme = useTheme();
 	const [recentTransaction, setRecentTransaction] = useState({});
 	const [allTransactions, setAllTransactions] = useState([]);
+	const [uniqueTransactions, setUniqueTransactions] = useState([]);
+	const [cpuTempBlockDiffArr, setCpuTempBlockDiffArr] = useState({});
 	const systemStatus = 'Synced';
 	const chainId = 100;
 	const noOfPeers = 2;
@@ -27,10 +31,28 @@ const CpuMetricsView = () => {
 			.then(data => {
 				setRecentTransaction(data[0]);
 				setAllTransactions(data);
+				const uniqueTransactions = data.filter(
+					(transaction, index, self) => index === self.findIndex(t => t.id === transaction.id)
+				);
+				setUniqueTransactions(uniqueTransactions);
+				console.log('unique transactions', uniqueTransactions);
 				console.log(data[0]);
+				console.log(data);
 			})
 			.catch(error => {
 				console.log(error);
+			});
+
+		fetch(backendApiUrl + 'get-cputemp-blockdifficulty/', {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then(async response => await response.json())
+			.then(data => {
+				setCpuTempBlockDiffArr(data);
+				console.log('cpu temp and block difficulty arr', cpuTempBlockDiffArr);
 			});
 	}, 1000);
 
@@ -187,6 +209,35 @@ const CpuMetricsView = () => {
 							/>
 						</>
 					)}
+				</Grid>
+
+				<Grid
+					item
+					xs={12}
+					md={6}
+					lg={8}
+				>
+					<AppWebsiteVisits
+						title='Block Difficulty vs CPU Temperature'
+						subheader='Each block difficulty vs CPU temperature per transaction'
+						chart={{
+							labels: cpuTempBlockDiffArr.cpu_temperature_arr, // Assuming you have a 'blockDifficulty' property in your transaction object
+							series: [
+								{
+									name: 'Bar',
+									type: 'column',
+									fill: 'solid',
+									data: cpuTempBlockDiffArr.block_difficulty_arr
+								},
+								{
+									name: 'Line',
+									type: 'area',
+									fill: 'gradient',
+									data: cpuTempBlockDiffArr.block_difficulty_arr
+								}
+							]
+						}}
+					/>
 				</Grid>
 			</Grid>
 		</Container>

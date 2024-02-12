@@ -6,14 +6,16 @@ import axios from 'axios';
 import { convertIPFSUrl } from 'src/utils/convertIPFSUrl';
 import { NoNFTs } from 'src/components';
 import ProductCard from '../product-card';
+import { useChainDetails } from 'src/contexts/ChainDetailsContext';
 
 const marketplaceAddress = '0xED7c84E25Ef97B4561A1273eC9676b441E2543B0';
-import { MARKETPLACE_CONTRACT_ADDRESS } from 'src/constants';
+import { JSON_RPC_URL, MARKETPLACE_CONTRACT_ADDRESS } from 'src/constants';
 import NFTMarketplace from 'src/artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
 
 const MarketplaceView = () => {
 	const [nfts, setNfts] = useState([]);
 	const [loadingState, setLoadingState] = useState('not-loaded');
+	const { blockDifficulty, blockNumber } = useChainDetails();
 
 	useEffect(() => {
 		loadNFTs();
@@ -70,23 +72,27 @@ const MarketplaceView = () => {
 		let cpuTemp = null;
 		let ramUsage = null;
 		let cpuFanSpeed = null;
+		const jsonRpcUrl = JSON_RPC_URL;
 
 		try {
 			const response = await axios.get('http://localhost:8000/cpu-metrics');
 			cpuTemp = response.data;
 			console.log('cpu temperature', response.data);
+
 		} catch (error) {
 			console.error('error', error);
 		}
 
 		// POST api call to send the transaction and the cpu temperature
-		data = {
+		let data = {
 			receipt: receipt,
 			cpu_temperature: cpuTemp,
 			transaction_type: 'Buy NFT',
 			ram_usage: ramUsage,
-			cpu_fan_speed: cpuFanSpeed
+			cpu_fan_speed: cpuFanSpeed,
+			block_difficulty: blockDifficulty
 		};
+		
 
 		try {
 			const response = await axios.post('http://localhost:8000/create-cpu-temperature-transaction/', data);

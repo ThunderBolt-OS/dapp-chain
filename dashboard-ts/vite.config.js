@@ -23,7 +23,7 @@ export default defineConfig({
   },
   server: {
     port: 3006,
-    open: false
+    open: true
   },
   preview: {
     port: 3006,
