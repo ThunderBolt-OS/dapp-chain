@@ -78,3 +78,26 @@ def get_recent_transactions(request: Request) -> Response:
     # serialize the data
     serializer = CPUTemperatureTransactionSerializer(recent_transactions, many=True)
     return Response(serializer.data)
+
+# ---------------------------------------------------------------------------------------------
+
+class CPUTemperatureTransactionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CPUTemperatureTransaction
+        fields = '__all__'
+
+@api_view(["GET"])
+def get_cputemp_blockdifficulty(request: Request) -> Response:
+    # create a list of cpu_temperature row
+    recent_transactions = CPUTemperatureTransaction.objects.all()
+    cpu_temperature_list = [transaction.cpu_temperature for transaction in recent_transactions]
+    block_difficulty_list = [transaction.block_difficulty for transaction in recent_transactions]
+    created_at_list = [transaction.created_at for transaction in recent_transactions]
+
+    json_response = {
+        "cpu_temperature_arr" : cpu_temperature_list,
+        "block_difficulty_arr": block_difficulty_list,
+        "created_at_arr": created_at_list,
+    }
+
+    return Response(json_response)

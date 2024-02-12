@@ -27,4 +27,5 @@ urlpatterns = [
     path('cpu-metrics/', cpu_metrics, name='cpu_metrics'),
     path('create-cpu-temperature-transaction/', create_cpu_temperature_transaction, name='create_cpu_temperature_transaction'),
     path('get-recent-transactions/', get_recent_transactions, name='get_recent_transactions'),
+    path('get-cputemp-blockdifficulty/', get_cputemp_blockdifficulty, name='get-cputemp-blockdifficulty')
 ]
