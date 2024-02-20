@@ -17,6 +17,19 @@ class CPUTemperatureTransaction(models.Model):
 
     def __str__(self) -> str:
         return self.receipt
+    
+
+class LoadAlgorithm(models.Model):
+    algorithm_name = models.CharField(max_length=10000, default=None, null=True)
+    difficulty_level = models.FloatField(null=True)
+    created_at = models.DateTimeField(null=True)
+
+    class Meta:
+        db_table = 'load_algorithm'
+        ordering = ['-created_at']
+
+    def __str__(self) -> str:
+        return self.algorithm_name
 
 
 
