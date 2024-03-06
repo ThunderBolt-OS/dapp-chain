@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 
 import contractArtifact from './artifacts/contracts/ExampleNFT.sol/ExampleNFT.json';
-const CONTRACT_ADDRESS = '0x3Fbe035eb0FF09f1DFA696d94A6AB5Da26eCc686';
+const CONTRACT_ADDRESS = '0xa9b042F671f6E8C53B5CBe7195dBE4A78162Ad0b';
 const CONTRACT_ABI = contractArtifact.abi;
 
 export async function NFTKoMintMaar(metaDataURL) {

@@ -26,26 +26,25 @@ const MarketplaceView = () => {
 			const provider = new ethers.BrowserProvider(window.ethereum);
 			const contract = new ethers.Contract(MARKETPLACE_CONTRACT_ADDRESS, NFTMarketplace.abi, provider);
 			const data = await contract.fetchMarketItems();
-
-			const items = await Promise.all(
-				data.map(async i => {
-					const tokenUri = await contract.tokenURI(i.tokenId);
-					const ipfsData = await axios.get(convertIPFSUrl(tokenUri));
-					const meta = ipfsData.data;
-
-					let price = formatUnits(i.price.toString(), 'ether');
-					let item = {
-						price,
-						tokenId: i.tokenId,
-						seller: i.seller,
-						owner: i.owner,
-						image: convertIPFSUrl(meta.image),
-						name: meta.name,
-						description: meta.description
-					};
-					return item;
-				})
-			);
+			const items = []
+			for (let index = 0; index < data.length; index++) {
+				const i = data[index];
+				const tokenUri = await contract.tokenURI(i.tokenId);
+				const ipfsData = await axios.get(convertIPFSUrl(tokenUri.replace('/metadata.json', '')) + '/metadata.json');
+				const meta = ipfsData.data;
+				console.log("META", meta)
+				let price = formatUnits(i.price.toString(), 'ether');
+				let item = {
+					price,
+					tokenId: i.tokenId,
+					seller: i.seller,
+					owner: i.owner,
+					image: convertIPFSUrl(meta.image, true),
+					name: meta.name,
+					description: meta.description
+				};
+				items.push(item)
+			}
 
 			const filteredItems = items.filter(item => item !== null);
 			setNfts(filteredItems);
@@ -60,7 +59,7 @@ const MarketplaceView = () => {
 		/* needs the user to sign the transaction, so will use Web3Provider and sign it */
 		const provider = new ethers.BrowserProvider(window.ethereum);
 		const signer = await provider.getSigner();
-		const contract = new ethers.Contract(marketplaceAddress, NFTMarketplace.abi, signer);
+		const contract = new ethers.Contract(MARKETPLACE_CONTRACT_ADDRESS, NFTMarketplace.abi, signer);
 
 		/* user will be prompted to pay the asking price to complete the transaction */
 		const price = parseUnits(nft.price.toString(), 'ether');
@@ -68,38 +67,39 @@ const MarketplaceView = () => {
 			value: price
 		});
 		const receipt = await transaction.wait();
+		console.log("bought data: ", receipt)
 		// GET api call to get the cpu temperature
-		let cpuTemp = null;
-		let ramUsage = null;
-		let cpuFanSpeed = null;
-		const jsonRpcUrl = JSON_RPC_URL;
+		// let cpuTemp = null;
+		// let ramUsage = null;
+		// let cpuFanSpeed = null;
+		// const jsonRpcUrl = JSON_RPC_URL;
 
-		try {
-			const response = await axios.get('http://localhost:8000/cpu-metrics');
-			cpuTemp = response.data;
-			console.log('cpu temperature', response.data);
+		// try {
+		// 	const response = await axios.get('http://localhost:8000/cpu-metrics');
+		// 	cpuTemp = response.data;
+		// 	console.log('cpu temperature', response.data);
 
-		} catch (error) {
-			console.error('error', error);
-		}
+		// } catch (error) {
+		// 	console.error('error', error);
+		// }
 
 		// POST api call to send the transaction and the cpu temperature
-		let data = {
-			receipt: receipt,
-			cpu_temperature: cpuTemp,
-			transaction_type: 'Buy NFT',
-			ram_usage: ramUsage,
-			cpu_fan_speed: cpuFanSpeed,
-			block_difficulty: blockDifficulty
-		};
-		
+		// let data = {
+		// 	receipt: receipt,
+		// 	cpu_temperature: cpuTemp,
+		// 	transaction_type: 'Buy NFT',
+		// 	ram_usage: ramUsage,
+		// 	cpu_fan_speed: cpuFanSpeed,
+		// 	block_difficulty: blockDifficulty
+		// };
 
-		try {
-			const response = await axios.post('http://localhost:8000/create-cpu-temperature-transaction/', data);
-			console.log('response', response);
-		} catch (error) {
-			console.error('error', error);
-		}
+
+		// try {
+		// 	const response = await axios.post('http://localhost:8000/create-cpu-temperature-transaction/', data);
+		// 	console.log('response', response);
+		// } catch (error) {
+		// 	console.error('Error creating cpu transaction', error);
+		// }
 
 		loadNFTs();
 	}

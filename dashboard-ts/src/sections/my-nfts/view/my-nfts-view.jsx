@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Card, Stack, Typography, Button } from '@mui/material';
+import { Container, Grid, Card, Stack, Typography, Button, Chip, useTheme } from '@mui/material';
 import { ethers, JsonRpcProvider, formatUnits, parseUnits } from 'ethers';
 import { useRouter } from 'src/routes/hooks';
 import axios from 'axios';
@@ -10,6 +10,7 @@ import { MARKETPLACE_CONTRACT_ADDRESS } from 'src/constants';
 import NFTMarketplace from 'src/artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
 
 const MyNFTsView = () => {
+	const theme = useTheme();
 	const [nfts, setNfts] = useState([]);
 	const [loadingState, setLoadingState] = useState('not-loaded');
 	const router = useRouter();
@@ -24,18 +25,18 @@ const MyNFTsView = () => {
 
 		const marketplaceContract = new ethers.Contract(MARKETPLACE_CONTRACT_ADDRESS, NFTMarketplace.abi, signer);
 		const data = await marketplaceContract.fetchMyNFTs();
-
+		console.log("MY NFT",data)
 		const items = await Promise.all(
 			data.map(async i => {
 				const tokenURI = await marketplaceContract.tokenURI(i.tokenId);
-				const meta = await axios.get(convertIPFSUrl(tokenURI));
+				const meta = await axios.get(convertIPFSUrl(tokenURI.replace('/metadata.json', '')) + '/metadata.json');
 				let price = formatUnits(i.price.toString(), 'ether');
 				let item = {
 					price,
 					tokenId: i.tokenId,
 					seller: i.seller,
 					owner: i.owner,
-					image: convertIPFSUrl(meta.data.image),
+					image: convertIPFSUrl(meta.data.image,true),
 					tokenURI
 				};
 				return item;
@@ -120,20 +121,47 @@ const MyNFTsView = () => {
 									marginTop: 'auto'
 								}}
 							>
-								<Typography
+								{/* <Typography
 									variant='h5'
 									sx={{ mt: 2 }}
 								>
 									{nft.price} ETH
-								</Typography>
+								</Typography> */}
 
-								<Button
+								{/* <Button
 									variant='contained'
 									onClick={() => listNFT(nft)}
 								>
 									List
-								</Button>
+								</Button> */}
 							</div>
+							<Stack
+								direction='row'
+								alignItems='center'
+								spacing={1}
+								sx={{ justifyContent: 'flex-end' }}
+							>
+								<Typography variant='subtitle1'>{nft.price}</Typography>
+								<Chip
+									icon={
+										<img
+											src='/assets/ethereum.svg'
+											alt='ETH'
+											width={18}
+											height={18}
+										/>
+									}
+									label='ETH'
+									size='small'
+									sx={{
+										marginRight: 1,
+										backgroundColor: theme.palette.grey[300],
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center'
+									}}
+								/>
+							</Stack>
 						</Card>
 					</Grid>
 				))}

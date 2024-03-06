@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid, Card, Typography, useTheme, CardContent,CardMedia, Chip, Stack, CircularProgress, Box } from '@mui/material';
+import { Container, Grid, Card, Typography, useTheme, CardContent, CardMedia, Chip, Stack, CircularProgress, Box } from '@mui/material';
 import { ethers, formatUnits } from 'ethers';
 import axios from 'axios';
 
@@ -23,18 +23,18 @@ const MyListingsView = () => {
 			const signer = await provider.getSigner();
 			const contract = new ethers.Contract(MARKETPLACE_CONTRACT_ADDRESS, NFTMarketplace.abi, signer);
 			const data = await contract.fetchItemsListed();
-
+			console.log("LSITED",data)
 			const items = await Promise.all(
 				data.map(async i => {
 					const tokenUri = await contract.tokenURI(i.tokenId);
-					const meta = await axios.get(convertIPFSUrl(tokenUri));
+					const meta = await axios.get(convertIPFSUrl(tokenUri.replace('/metadata.json', '')) + '/metadata.json');
 					let price = formatUnits(i.price.toString(), 'ether');
 					let item = {
 						price,
 						tokenId: i.tokenId,
 						seller: i.seller,
 						owner: i.owner,
-						image: convertIPFSUrl(meta.data.image)
+						image: convertIPFSUrl(meta.data.image, true)
 					};
 					return item;
 				})
