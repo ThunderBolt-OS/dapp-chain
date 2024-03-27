@@ -1,4 +1,4 @@
-# Setting Up a Private Network with Polygon-Edge
+# Setting Up a Private Network with Polygon-Edge Private Network
 
 ### Prerequisites
 Make sure you have Polygon-Edge installed on your system.
