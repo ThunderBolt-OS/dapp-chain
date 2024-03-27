@@ -1,0 +1,1 @@
+import{an as e}from"./index-c1be743a.js";function c(t,r){const n=e.useRef(null),u=e.useRef(t);return e.useEffect(()=>{u.current=t},[t]),e.useEffect(()=>{const s=()=>u.current();if(typeof r=="number")return n.current=window.setInterval(s,r),()=>window.clearInterval(n.current)},[r]),n}export{c as u};

@@ -1,6 +1,7 @@
 import EventEmitter from 'events';
 import axios from 'axios';
 import { useCPUTemp } from 'src/contexts/CPUTempContext';
+import { BACKEND_API_URL } from 'src/constants';
 
 
 const transactionEventEmitter = new EventEmitter();
@@ -13,7 +14,7 @@ export const emitTransaction = async (type, data) => {
 
     // GET the cpu temperature
     try {
-        const getCpuTemperature = await axios.get('http://localhost:3000/cpu-temperature');
+        const getCpuTemperature = await axios.get(`${BACKEND_API_URL}/cpu-temperature`);
         console.log('GET API Response:', getCpuTemperature.data);
         setCpuTemp(getCpuTemperature.data.cpuTemperature);
 
@@ -23,7 +24,7 @@ export const emitTransaction = async (type, data) => {
 
     // POST the cpu temp, type and data
     try {
-        const postApiResponse = await axios.post('http://localhost:3000/cpu-temperature', {
+        const postApiResponse = await axios.post(`${BACKEND_API_URL}/cpu-temperature`, {
             cpuTemperature: cpuTemp,
             type: type,
             data: data

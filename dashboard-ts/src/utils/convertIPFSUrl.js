@@ -6,6 +6,7 @@ function addIpfsLink(url) {
 
 export function convertIPFSUrl(inputUrl, image = false) {
 	// Replace "ipfs://" with "https://ipfs.io/ipfs/"
+	console.log(inputUrl)
 	const outputUrl = inputUrl.replace('ipfs://', 'https://');
 	return image ? addIpfsLink(outputUrl) :
 		outputUrl + '.ipfs.dweb.link';

@@ -70,6 +70,7 @@ export default function Nav({ openNav, onCloseNav }) {
 				alt='photoURL'
 				sx={{ width: 37, height: 37, bgcolor: 'background.neutral' }}
 			/>
+			
 			{isMetaMaskConnected ? (
 				<Box sx={{ ml: 2 }}>
 					<Typography variant='subtitle2'>{clipAddress(account)}</Typography>

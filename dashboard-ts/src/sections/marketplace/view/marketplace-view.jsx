@@ -12,6 +12,7 @@ const marketplaceAddress = '0xED7c84E25Ef97B4561A1273eC9676b441E2543B0';
 import { JSON_RPC_URL, MARKETPLACE_CONTRACT_ADDRESS } from 'src/constants';
 import NFTMarketplace from 'src/artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json';
 
+
 const MarketplaceView = () => {
 	const [nfts, setNfts] = useState([]);
 	const [loadingState, setLoadingState] = useState('not-loaded');
@@ -30,6 +31,7 @@ const MarketplaceView = () => {
 			for (let index = 0; index < data.length; index++) {
 				const i = data[index];
 				const tokenUri = await contract.tokenURI(i.tokenId);
+				console.log("TEKN",convertIPFSUrl(tokenUri.replace('/metadata.json', '')) + '/metadata.json')
 				const ipfsData = await axios.get(convertIPFSUrl(tokenUri.replace('/metadata.json', '')) + '/metadata.json');
 				const meta = ipfsData.data;
 				console.log("META", meta)
@@ -44,10 +46,12 @@ const MarketplaceView = () => {
 					description: meta.description
 				};
 				items.push(item)
+				console.log("ITEM",item)
 			}
 
-			const filteredItems = items.filter(item => item !== null);
-			setNfts(filteredItems);
+			// const filteredItems = items.filter(item => item !== null);
+			console.log(items)
+			setNfts(items);
 			setLoadingState('loaded');
 		} catch (error) {
 			console.error('Error loading NFTs:', error);
@@ -75,7 +79,7 @@ const MarketplaceView = () => {
 		// const jsonRpcUrl = JSON_RPC_URL;
 
 		// try {
-		// 	const response = await axios.get('http://localhost:8000/cpu-metrics');
+		// 	const response = await axios.get('BACKEND_API_URL/cpu-metrics');
 		// 	cpuTemp = response.data;
 		// 	console.log('cpu temperature', response.data);
 
@@ -95,7 +99,7 @@ const MarketplaceView = () => {
 
 
 		// try {
-		// 	const response = await axios.post('http://localhost:8000/create-cpu-temperature-transaction/', data);
+		// 	const response = await axios.post('BACKEND_API_URL/create-cpu-temperature-transaction/', data);
 		// 	console.log('response', response);
 		// } catch (error) {
 		// 	console.error('Error creating cpu transaction', error);
@@ -104,15 +108,14 @@ const MarketplaceView = () => {
 		loadNFTs();
 	}
 
-	if (loadingState === 'loaded' && !nfts.length)
-		return (
+	// if 
+		return !nfts.length ? (
 			<NoNFTs
 				title='NFT Marketplace'
 				body='No items in the marketplace'
 			/>
-		);
-
-	return (
+		)
+	: (
 		<Container>
 			<Stack
 				direction='row'

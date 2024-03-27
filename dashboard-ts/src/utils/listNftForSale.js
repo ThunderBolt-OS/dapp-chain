@@ -1,6 +1,6 @@
 import { ethers, parseUnits } from 'ethers';
 import axios from 'axios';
-import { JSON_RPC_URL } from 'src/constants';
+import { BACKEND_API_URL, JSON_RPC_URL } from 'src/constants';
 import { useChainDetails } from 'src/contexts/ChainDetailsContext';
 // const marketplaceAddress = "0xa5Fc06987A507f41768D5153D9E1Afd9681c29E1";
 
@@ -28,7 +28,7 @@ export async function listNFTForSale(ifpsUrl, price, description, chainDetails) 
 	let cpuTemp = null;
 
 	try {
-		const response = await axios.get('http://localhost:8000/cpu-metrics');
+		const response = await axios.get(`${BACKEND_API_URL}/cpu-metrics`);
 		cpuTemp = response.data;
 		console.log('cpu temperature', response.data);
 	} catch (error) {
@@ -47,7 +47,7 @@ export async function listNFTForSale(ifpsUrl, price, description, chainDetails) 
 	console.log('this is data', data);
 
 	try {
-		const response = await axios.post('http://localhost:8000/create-cpu-temperature-transaction/', data);
+		const response = await axios.post(`${BACKEND_API_URL}/create-cpu-temperature-transaction/`, data);
 		console.log('POST response', response);
 	} catch (error) {
 		console.error('error in posting txn', error);

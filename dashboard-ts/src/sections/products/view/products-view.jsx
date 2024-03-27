@@ -98,7 +98,7 @@ export default function ProductsView() {
 				justifyContent='space-between'
 				mb={5}
 			>
-				<Typography variant='h4'>My Products</Typography>
+				<Typography variant='h4'>My Blocks</Typography>
 			</Stack>
 
 			<Grid
